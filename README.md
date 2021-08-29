@@ -26,13 +26,13 @@ pnpm add loot-rarity # pnpm
 type Rarity = 1 | 2 | 3 | 4 | 5 | 6;
 
 // Get the rarity of an item given its name.
-function itemRarity(itemName: string): Promise<Rarity>;
+function itemRarity(itemName: string): Rarity;
 
 // Get the color of an item given its name or rarity.
-function rarityColor(itemOrRarity: string | Rarity): Promise<string>;
+function rarityColor(itemOrRarity: string | Rarity): string;
 
 // Get the description of a rarity given an item name or rarity level.
-function rarityDescription(itemOrRarity: string | Rarity): Promise<string>;
+function rarityDescription(itemOrRarity: string | Rarity): string;
 ```
 
 ## Demo

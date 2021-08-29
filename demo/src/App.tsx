@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { randomBagId, useItemRarity, useBag } from "./hooks";
+import { randomBagId, useBag } from "./hooks";
 
 function App() {
   const [bagId, setBagId] = useState(randomBagId());
   const bag = useBag(bagId);
-  const itemsWithRarities = useItemRarity(bag?.items ?? []);
 
   return (
     <div>
@@ -29,9 +28,9 @@ function App() {
         />
         <button onClick={() => setBagId(randomBagId())}>random</button>
       </h2>
-      {itemsWithRarities.length > 0 && (
+      {bag && (
         <ul>
-          {itemsWithRarities.map(
+          {bag.items.map(
             ({ color = "#ffffff", name, description = "…" }, index) => {
               return (
                 <li key={name + index} style={{ color }}>
