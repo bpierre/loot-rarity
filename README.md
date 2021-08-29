@@ -53,6 +53,11 @@ pnpm i
 pnpm dev
 ```
 
+## Thanks
+
+- [@scotato](https://github.com/scotato) loot-rarity was heavily inspired by [github.com/scotato/inventory](https://github.com/scotato/inventory)
+- [@Anish-Agnihotri](https://github.com/Anish-Agnihotri) for [the data he extracted from Loot](https://github.com/Anish-Agnihotri/dhof-loot) and that loot-rarity is using.
+
 ## License
 
 MIT

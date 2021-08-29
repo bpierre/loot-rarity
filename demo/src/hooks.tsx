@@ -51,17 +51,21 @@ export function useItemRarity(
   return infoList;
 }
 
-function randomBagId() {
-  return Math.floor(Math.random() * 7999) + 1;
+export function randomBagId() {
+  return String(Math.floor(Math.random() * 7999) + 1);
 }
 
-export function useRandomBag(): [
-  { id: string; items: Array<string> },
-  () => void
-] {
-  const [bagId, setBagId] = useState(randomBagId());
-  return [
-    { id: String(bagId), items: Object.values(loot[bagId - 1][bagId]) },
-    () => setBagId(randomBagId),
-  ];
+export function useBag(
+  id: string = randomBagId()
+): null | { id: string; items: Array<string> } {
+  const bagId = Number(id);
+
+  if (isNaN(bagId) || bagId < 1 || bagId > 8000) {
+    return null;
+  }
+
+  return {
+    id: String(bagId),
+    items: Object.values(loot[bagId - 1][bagId]),
+  };
 }
