@@ -1,6 +1,6 @@
-# loot-rarity
+<img width="100%" alt="loot-rarity" src="https://user-images.githubusercontent.com/36158/131253006-85fb23c9-846f-4d00-b909-f63f181288d3.png">
 
-Get the rarity level of a Loot ([lootproject.com](https://lootproject.com)) item.
+Get the rarity level of a ([Loot](https://lootproject.com)) item.
 
 ## How does it work?
 
