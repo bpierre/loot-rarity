@@ -13,7 +13,7 @@
       body {
         margin: 0;
         font: 16px/1.5 serif;
-        color: #fff;
+        color: #ccc;
         background: #000;
       }
       button {
@@ -21,10 +21,12 @@
         border-left: 2px solid #fff;
         border-right: 2px solid #888;
         border-bottom: 2px solid #888;
-        padding: 6px;
-        color: #fff;
+        height: 30px;
+        padding: 0 6px;
+        color: #ccc;
         background: #000;
         cursor: pointer;
+        outline: 0;
       }
       button:active:not(:disabled) {
         border-top: 2px solid #888;
@@ -37,35 +39,54 @@
         border: 2px solid #888;
         cursor: default;
       }
-      h1 {
-        margin: 20px 0;
+      button:focus-visible {
+        border-color: transparent;
+        outline: 2px solid #ccc;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 20px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 20px;
+        text-align: center;
+      }
+      .header h2 {
+        display: flex;
+        align-items: center;
+        margin: 0;
         font-size: 20px;
       }
-      h2 {
-        margin: 20px 0;
-        font-size: 20px;
-      }
-      #bag-input {
-        width: 60px;
+      .header input {
+        height: 30px;
+        width: 55px;
         font-size: 20px;
         font-family: serif;
         text-align: center;
-        color: #fff;
+        color: #ccc;
         border: 0;
         background: transparent;
         margin-right: 20px;
       }
-      #bag-input:focus {
-        outline: 1px solid #fff;
+      .header input:focus {
+        outline: 2px solid #ccc;
       }
-      ul {
+      .bag {
         margin: 10px 0;
-        padding: 0;
+        padding: 20px;
         list-style: none;
+        line-height: 2;
+        border: 2px solid #ccc;
       }
-      #root {
-        width: 600px;
+      .app {
+        display: flex;
+        flex-direction: column;
+        width: 450px;
         margin: 80px auto;
+        justify-content: center;
       }
     </style>
   </head>
