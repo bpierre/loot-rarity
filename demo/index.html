@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+    <style>
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font: 16px/1.5 serif;
+        color: #fff;
+        background: #000;
+      }
+      button {
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        border-right: 2px solid #888;
+        border-bottom: 2px solid #888;
+        padding: 6px;
+        color: #fff;
+        background: #000;
+        cursor: pointer;
+      }
+      button:active:not(:disabled) {
+        border-top: 2px solid #888;
+        border-left: 2px solid #888;
+        border-right: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+      }
+      button:disabled {
+        color: #aaa;
+        border: 2px solid #888;
+        cursor: default;
+      }
+      h1 {
+        margin: 20px 0;
+        font-size: 20px;
+      }
+      #root {
+        width: 600px;
+        margin: 80px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

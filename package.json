@@ -1,0 +1,32 @@
+{
+  "name": "loot-rarity",
+  "version": "1.0.0",
+  "description": "Get the rarity level of a Loot (lootproject.com) item",
+  "author": "Pierre Bertet",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup --dts --format esm,cjs",
+    "generate-rarity": "ts-node scripts/generate-items-rarity.ts > data/items-rarity-compact.json"
+  },
+  "devDependencies": {
+    "ts-node": "^10.2.1",
+    "tslib": "^2.3.1",
+    "tsup": "^4.14.0",
+    "typescript": "^4.4.2"
+  },
+  "tsup": {
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true,
+    "entryPoints": [
+      "src/index.ts"
+    ]
+  }
+}
