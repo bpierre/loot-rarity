@@ -1,6 +1,6 @@
-# loot-rarity
+<img width="1280" alt="Loot Rarity" src="https://user-images.githubusercontent.com/36158/131253911-12092434-7325-4d7b-b1f2-5a752937bdfc.png">
 
-Get the rarity level of a Loot ([lootproject.com](https://lootproject.com)) item.
+Get the rarity level of a [Loot](https://lootproject.com) item.
 
 ## How does it work?
 
@@ -26,13 +26,13 @@ pnpm add loot-rarity # pnpm
 type Rarity = 1 | 2 | 3 | 4 | 5 | 6;
 
 // Get the rarity of an item given its name.
-function itemRarity(itemName: string): Promise<Rarity>;
+function itemRarity(itemName: string): Rarity;
 
 // Get the color of an item given its name or rarity.
-function rarityColor(itemOrRarity: string | Rarity): Promise<string>;
+function rarityColor(itemOrRarity: string | Rarity): string;
 
 // Get the description of a rarity given an item name or rarity level.
-function rarityDescription(itemOrRarity: string | Rarity): Promise<string>;
+function rarityDescription(itemOrRarity: string | Rarity): string;
 ```
 
 ## Demo
@@ -57,8 +57,8 @@ pnpm dev
 
 ## Thanks
 
-- [@scotato](https://github.com/scotato) loot-rarity was heavily inspired by [github.com/scotato/inventory](https://github.com/scotato/inventory)
-- [@Anish-Agnihotri](https://github.com/Anish-Agnihotri) for [the data he extracted from Loot](https://github.com/Anish-Agnihotri/dhof-loot) and that loot-rarity is using.
+- [@scotato](https://github.com/scotato) for [github.com/scotato/inventory](https://github.com/scotato/inventory), loot-rarity was heavily inspired by it.
+- [@Anish-Agnihotri](https://github.com/Anish-Agnihotri) for [the data](https://github.com/Anish-Agnihotri/dhof-loot) he extracted from Loot and that loot-rarity is using.
 
 ## License
 

@@ -1,5 +1,4 @@
-import { webcrypto } from "crypto";
-import { hashItem, WebCrypto } from "../src/hash-item";
+import { hashItem } from "../src/hash-item";
 import occurences from "../data/occurences.json";
 
 type Occurences = Record<string, number>;
@@ -14,11 +13,8 @@ function scoreFromOccurences(occurences: number) {
 }
 
 async function main() {
-  const hashedItems = await Promise.all(
-    Object.entries(occurences as Occurences).map(async ([name, occurences]) => [
-      await hashItem(name, webcrypto as unknown as WebCrypto),
-      occurences,
-    ])
+  const hashedItems = Object.entries(occurences as Occurences).map(
+    ([name, occurences]) => [hashItem(name), occurences]
   );
 
   const uniques = new Set(hashedItems.map(([hash]) => hash)).size;
@@ -27,12 +23,15 @@ async function main() {
     throw new Error("Collision! Please check src/hash-item.ts");
   }
 
-  const byScore = hashedItems.reduce((byScore, [hash, occurences]) => {
-    const score = scoreFromOccurences(occurences as number);
-    const scoreHashes = byScore[score] ?? [];
-    byScore[score] = [...scoreHashes, hash];
-    return byScore;
-  }, {});
+  const byScore = hashedItems.reduce(
+    (byScore: string[], [hash, occurences]) => {
+      const score = scoreFromOccurences(Number(occurences));
+      const scoreHashes = byScore[score - 1] ?? "";
+      byScore[score - 1] = scoreHashes + hash;
+      return byScore;
+    },
+    []
+  );
 
   console.log(JSON.stringify(byScore));
 }
