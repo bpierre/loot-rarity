@@ -37,7 +37,9 @@ function rarityDescription(itemOrRarity: string | Rarity): Promise<string>;
 
 ## Demo
 
-Have a look at [the demo app](./demo) to see how it works:
+Have a look at [the demo app](https://ky7e7.csb.app/) on CodeSandbox to see how it works.
+
+You can also run it from this repository:
 
 ```sh
 # Install pnpm if needed
