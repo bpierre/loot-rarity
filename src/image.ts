@@ -83,7 +83,7 @@ export function isUri(data: string) {
 export async function imageRarity(
   svgOrSvgUri: string,
   { displayLevels = false }: { displayLevels?: boolean } = {}
-) {
+): Promise<string> {
   const svg = isUri(svgOrSvgUri)
     ? await fetch(svgOrSvgUri).then((res) => res.text())
     : svgOrSvgUri;
