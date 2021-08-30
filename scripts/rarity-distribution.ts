@@ -1,6 +1,6 @@
 import occurences from "../data/occurences.json";
 import { scoreFromOccurences } from "./utils";
-import { Rarity, rarityDescription } from "../src";
+import { rarityDescription, Rarity } from "../src";
 import rarityLevels from "../src/rarity-levels";
 
 type Occurences = Record<string, number>;

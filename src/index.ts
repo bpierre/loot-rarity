@@ -1,8 +1,9 @@
+import type { Rarity } from "./types";
+
 import itemsRarity from "../data/items-rarity-hashes.json";
 import { hashItem } from "./hash-item";
 import rarityLevels from "./rarity-levels";
-
-export type Rarity = 1 | 2 | 3 | 4 | 5 | 6;
+import { itemsFromSvg, svgDataUri, svgFromItems, imageRarity } from "./image";
 
 let cachedItemsrarity = null;
 
@@ -47,4 +48,6 @@ export function rarityDescription(itemOrRarity: string | Rarity): string {
   return description;
 }
 
+export type { Rarity };
 export { rarityLevels };
+export { imageRarity, itemsFromSvg, svgDataUri, svgFromItems };
