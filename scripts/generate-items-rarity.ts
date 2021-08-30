@@ -1,16 +1,8 @@
 import { hashItem } from "../src/hash-item";
 import occurences from "../data/occurences.json";
+import { scoreFromOccurences } from "./utils";
 
 type Occurences = Record<string, number>;
-
-function scoreFromOccurences(occurences: number) {
-  if (occurences === 1) return 6; // mythic
-  if (occurences < 10) return 5; // legendary
-  if (occurences < 25) return 4; // epic
-  if (occurences < 50) return 3; // rare
-  if (occurences < 300) return 2; // uncommon
-  return 1; // common
-}
 
 async function main() {
   const hashedItems = Object.entries(occurences as Occurences).map(

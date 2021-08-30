@@ -4,11 +4,11 @@ Get the rarity level of a [Loot](https://lootproject.com) item.
 
 ## How does it work?
 
-- Items with 300 or more occurences have a rarity of 1 (common).
-- Items between 50 and 300 occurences have a rarity of 2 (uncommon).
-- Items between 25 and 50 occurences have a rarity of 3 (rare).
-- Items between 10 and 25 occurences have a rarity of 4 (epic).
-- Items between 2 and 10 occurences have a rarity of 5 (legendary).
+- Items with 374 or more occurences have a rarity of 1 (common).
+- Items between 357 and 374 occurences have a rarity of 2 (uncommon).
+- Items between 100 and 357 occurences have a rarity of 3 (rare).
+- Items between 9 and 100 occurences have a rarity of 4 (epic).
+- Items between 2 and 9 occurences have a rarity of 5 (legendary).
 - Items with a single occurence have a rarity of 6 (mythic).
 
 ## Installation
