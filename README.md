@@ -2,7 +2,9 @@
 
 Get the rarity level of a [Loot](https://lootproject.com) item.
 
-## How does the scoring work?
+## How are the rarity levels determined?
+
+The rarity level of any given item is deducted from its number of occurrences in the total number of Loot items.
 
 | Rarity                                                                                                                                    | Description                                        | Occurrences           |
 | ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------- |
