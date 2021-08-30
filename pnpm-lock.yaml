@@ -2,10 +2,14 @@ lockfileVersion: 5.3
 
 specifiers:
   '@types/node': ^16.7.5
+  isomorphic-fetch: ^3.0.0
   ts-node: ^10.2.1
   tslib: ^2.3.1
   tsup: ^4.14.0
   typescript: ^4.4.2
+
+dependencies:
+  isomorphic-fetch: 3.0.0
 
 devDependencies:
   '@types/node': 16.7.6
@@ -381,6 +385,13 @@ packages:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
     dev: true
 
+  /isomorphic-fetch/3.0.0:
+    resolution: {integrity: sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==}
+    dependencies:
+      node-fetch: 2.6.1
+      whatwg-fetch: 3.6.2
+    dev: false
+
   /joycon/3.0.1:
     resolution: {integrity: sha512-SJcJNBg32dGgxhPtM0wQqxqV0ax9k/9TaUskGDSJkSFSQOEWWvQ3zzWdGQRIUry2j1zA5+ReH13t0Mf3StuVZA==}
     engines: {node: '>=10'}
@@ -438,6 +449,11 @@ packages:
       object-assign: 4.1.1
       thenify-all: 1.6.0
     dev: true
+
+  /node-fetch/2.6.1:
+    resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
+    engines: {node: 4.x || >=6.0.0}
+    dev: false
 
   /node-modules-regexp/1.0.0:
     resolution: {integrity: sha1-jZ2+KJZKSsVxLpExZCEHxx6Q7EA=}
@@ -694,6 +710,10 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
+
+  /whatwg-fetch/3.6.2:
+    resolution: {integrity: sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==}
+    dev: false
 
   /which/2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}

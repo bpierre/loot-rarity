@@ -33,6 +33,9 @@ function rarityColor(itemOrRarity: string | Rarity): string;
 
 // Get the description of a rarity given an item name or rarity level.
 function rarityDescription(itemOrRarity: string | Rarity): string;
+
+// Transforms an SVG image (SVG, URL or data URI) to add rarity colors.
+function imageRarity(image: string, { displayLevels?: Boolean }): string;
 ```
 
 ## Demo

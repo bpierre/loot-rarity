@@ -4,7 +4,6 @@ import { randomBagId, useBag } from "./hooks";
 function App() {
   const [bagId, setBagId] = useState(randomBagId());
   const bag = useBag(bagId);
-
   return (
     <div className="app">
       <div className="header">

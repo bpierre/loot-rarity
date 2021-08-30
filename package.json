@@ -4,16 +4,17 @@
   "description": "Get the rarity level of a Loot (lootproject.com) item",
   "author": "Pierre Bertet",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index-node.js",
   "module": "dist/index.mjs",
+  "browser": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup --dts --format esm,cjs",
-    "dev": "tsup --watch --dts --format esm,cjs",
+    "build": "tsup --dts --format esm,cjs --target=es2020",
+    "dev": "tsup --watch --dts --format esm,cjs --target=es2020",
     "generate-rarity": "ts-node scripts/generate-items-rarity.ts > data/items-rarity-hashes.json",
     "check-distribution": "ts-node scripts/rarity-distribution.ts"
   },
@@ -25,11 +26,15 @@
     "typescript": "^4.4.2"
   },
   "tsup": {
-    "splitting": false,
+    "splitting": true,
     "sourcemap": true,
     "clean": true,
     "entryPoints": [
-      "src/index.ts"
+      "src/index.ts",
+      "src/index-node.ts"
     ]
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^3.0.0"
   }
 }
