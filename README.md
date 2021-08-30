@@ -1,6 +1,6 @@
 <img width="1280" alt="Loot Rarity" src="https://user-images.githubusercontent.com/36158/131253911-12092434-7325-4d7b-b1f2-5a752937bdfc.png">
 
-Get the rarity level of a [Loot](https://lootproject.com) item.
+Rarity levels for [Loot](https://lootproject.com) items.
 
 ## How are the rarity levels determined?
 
