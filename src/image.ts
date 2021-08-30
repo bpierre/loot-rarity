@@ -80,6 +80,18 @@ export function isUri(data: string) {
   return /^(?:https?|data)\:/.test(data);
 }
 
+export function imageRarityFromItems(
+  items: string[],
+  { displayLevels = false }: { displayLevels?: boolean } = {}
+): string {
+  return svgDataUri(
+    svgFromItems(items, {
+      displayLevels,
+      levels: items.map(itemRarity),
+    })
+  );
+}
+
 export async function imageRarity(
   svgOrSvgUri: string,
   { displayLevels = false }: { displayLevels?: boolean } = {}
@@ -93,10 +105,6 @@ export async function imageRarity(
       "The image doesn’t seem to be an SVG or a URL pointing to an SVG"
     );
   }
-  const items = itemsFromSvg(svg);
-  const colorSvg = svgFromItems(items, {
-    displayLevels,
-    levels: items.map(itemRarity),
-  });
-  return svgDataUri(colorSvg);
+
+  return imageRarityFromItems(itemsFromSvg(svg), { displayLevels });
 }

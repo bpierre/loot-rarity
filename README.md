@@ -35,7 +35,10 @@ function rarityColor(itemOrRarity: string | Rarity): string;
 function rarityDescription(itemOrRarity: string | Rarity): string;
 
 // Transforms an SVG image (SVG, URL or data URI) to add rarity colors.
-function imageRarity(image: string, { displayLevels?: Boolean }): string;
+function imageRarity(image: string, { displayLevels?: Boolean }): Promise<string>;
+
+// Generates an image with colors from a list of items.
+function imageRarityFromItems(items: string[], { displayLevels?: Boolean }): string;
 ```
 
 ## Demo
