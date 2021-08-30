@@ -14,7 +14,8 @@
   "scripts": {
     "build": "tsup --dts --format esm,cjs",
     "dev": "tsup --watch --dts --format esm,cjs",
-    "generate-rarity": "ts-node scripts/generate-items-rarity.ts > data/items-rarity-hashes.json"
+    "generate-rarity": "ts-node scripts/generate-items-rarity.ts > data/items-rarity-hashes.json",
+    "check-distribution": "ts-node scripts/rarity-distribution.ts"
   },
   "devDependencies": {
     "@types/node": "^16.7.5",
