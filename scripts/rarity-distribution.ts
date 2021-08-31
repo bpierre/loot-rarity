@@ -1,6 +1,6 @@
 import occurences from "../data/occurences.json";
 import { scoreFromOccurences } from "./utils";
-import { rarityDescription, Rarity } from "../src";
+import { rarityDescription, RarityLevel } from "../src";
 import rarityLevels from "../src/rarity-levels";
 
 type Occurences = Record<string, number>;
@@ -24,7 +24,7 @@ async function main() {
   console.log("");
 
   levels.forEach((items, index) => {
-    const description = rarityDescription((index + 1) as Rarity);
+    const description = rarityDescription((index + 1) as RarityLevel);
     const percentage = Math.round((items / total) * 10000) / 100;
     const threshold = rarityLevels[index][0];
 
