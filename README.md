@@ -1,4 +1,4 @@
-<img width="1280" alt="Loot Rarity" src="https://user-images.githubusercontent.com/36158/131253911-12092434-7325-4d7b-b1f2-5a752937bdfc.png">
+<img width="1280" alt="Loot Rarity" src="https://user-images.githubusercontent.com/36158/131556816-cf5861c7-8619-4b56-9d90-f538ebb86f74.png">
 
 Rarity levels for [Loot](https://lootproject.com) items.
 
