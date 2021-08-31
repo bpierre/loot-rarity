@@ -1,7 +1,8 @@
-import type { Rarity } from "./types";
+import type { RarityLevel } from "./types";
 
 import { itemRarity } from "./index";
 import rarityLevels from "./rarity-levels";
+import { warnDeprecatedName } from "./utils";
 
 export function svgFromItems(
   items: string[],
@@ -10,7 +11,7 @@ export function svgFromItems(
     displayLevels = false,
   }: {
     displayLevels?: boolean;
-    levels?: Rarity[];
+    levels?: RarityLevel[];
   } = {}
 ) {
   if (items.length !== 8) {
@@ -19,7 +20,7 @@ export function svgFromItems(
   const levelStyles = levels
     ? rarityLevels
         .map(([_, color], index) => {
-          return !levels.includes((index + 1) as Rarity)
+          return !levels.includes((index + 1) as RarityLevel)
             ? ""
             : `.level-${index + 1} { fill: ${color}; }`;
         })
@@ -80,7 +81,7 @@ export function isUri(data: string) {
   return /^(?:https?|data)\:/.test(data);
 }
 
-export function imageRarityFromItems(
+export function rarityImageFromItems(
   items: string[],
   { displayLevels = false }: { displayLevels?: boolean } = {}
 ): string {
@@ -92,19 +93,39 @@ export function imageRarityFromItems(
   );
 }
 
-export async function imageRarity(
-  svgOrSvgUri: string,
+export async function rarityImage(
+  svgOrSvgUriOrItems: string | string[],
   { displayLevels = false }: { displayLevels?: boolean } = {}
 ): Promise<string> {
-  const svg = isUri(svgOrSvgUri)
-    ? await fetch(svgOrSvgUri).then((res) => res.text())
-    : svgOrSvgUri;
+  if (Array.isArray(svgOrSvgUriOrItems)) {
+    return rarityImageFromItems(svgOrSvgUriOrItems);
+  }
+
+  const svg = isUri(svgOrSvgUriOrItems)
+    ? await fetch(svgOrSvgUriOrItems).then((res) => res.text())
+    : svgOrSvgUriOrItems;
 
   if (!svg.startsWith("<svg")) {
     throw new Error(
-      "The image doesn’t seem to be an SVG or a URL pointing to an SVG"
+      "The resource doesn’t seem to be an SVG or a URL pointing to an SVG"
     );
   }
 
-  return imageRarityFromItems(itemsFromSvg(svg), { displayLevels });
+  return rarityImageFromItems(itemsFromSvg(svg), { displayLevels });
+}
+
+// deprecated
+
+export function imageRarityFromItems(
+  ...params: Parameters<typeof rarityImageFromItems>
+): ReturnType<typeof rarityImageFromItems> {
+  warnDeprecatedName("imageRarityFromItems()", "rarityImageFromItems()");
+  return rarityImageFromItems(...params);
+}
+
+export function imageRarity(
+  ...params: Parameters<typeof rarityImage>
+): ReturnType<typeof rarityImage> {
+  warnDeprecatedName("imageRarity()", "rarityImage()");
+  return rarityImage(...params);
 }
