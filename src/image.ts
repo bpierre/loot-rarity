@@ -1,53 +1,46 @@
-import type { RarityLevel } from "./types";
+import type { ColorFn } from "./types";
 
-import { itemRarity } from "./index";
-import rarityLevels from "./rarity-levels";
+import { rarityColor, rarityDescription } from "./main";
 import { warnDeprecatedName } from "./utils";
+
+const SVG_START =
+  '<svg xmlns="http://www.w3.org/2000/svg" ' +
+  'preserveAspectRatio="xMinYMin meet" ' +
+  'viewBox="0 0 350 350">' +
+  "<style>" +
+  "text { font-family: serif; font-size: 14px; }" +
+  "</style>" +
+  '<rect width="100%" height="100%" fill="black" />';
+const SVG_END = "</svg>";
 
 export function svgFromItems(
   items: string[],
   {
-    levels,
+    colorFn,
     displayLevels = false,
   }: {
+    colorFn?: ColorFn;
     displayLevels?: boolean;
-    levels?: RarityLevel[];
   } = {}
 ) {
   if (items.length !== 8) {
     throw new Error("A bag should contain exactly 8 items");
   }
-  const levelStyles = levels
-    ? rarityLevels
-        .map(([_, color], index) => {
-          return !levels.includes((index + 1) as RarityLevel)
-            ? ""
-            : `.level-${index + 1} { fill: ${color}; }`;
-        })
-        .join("")
-    : "";
   return (
-    '<svg xmlns="http://www.w3.org/2000/svg" ' +
-    'preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350">' +
-    "<style>" +
-    "text { fill: white; font-family: serif; font-size: 14px; }" +
-    levelStyles +
-    "</style>" +
-    '<rect width="100%" height="100%" fill="black" />' +
+    SVG_START +
     items
       .map((item, index) => {
         const y = 20 * (index + 1);
-        const levelClass = levels ? ` level-${levels[index]}` : "";
-        const levelLabel =
-          levels && displayLevels
-            ? ` (${rarityLevels[levels[index] - 1][2].slice(0, 1)})`
-            : "";
-        return `<text x="10" y="${y}" class="base${levelClass}">${
-          item + levelLabel
-        }</text>`;
+        const level = displayLevels
+          ? ` (${rarityDescription(item).slice(0, 1)})`
+          : "";
+        const color = rarityColor(item, { colorFn });
+        return (
+          `<text x="10" y="${y}" fill="${color}">` + item + level + `</text>`
+        );
       })
       .join("") +
-    "</svg>"
+    SVG_END
   );
 }
 
@@ -83,19 +76,20 @@ export function isUri(data: string) {
 
 export function rarityImageFromItems(
   items: string[],
-  { displayLevels = false }: { displayLevels?: boolean } = {}
+  {
+    colorFn,
+    displayLevels = false,
+  }: { colorFn?: ColorFn; displayLevels?: boolean } = {}
 ): string {
-  return svgDataUri(
-    svgFromItems(items, {
-      displayLevels,
-      levels: items.map(itemRarity),
-    })
-  );
+  return svgDataUri(svgFromItems(items, { colorFn, displayLevels }));
 }
 
 export async function rarityImage(
   svgOrSvgUriOrItems: string | string[],
-  { displayLevels = false }: { displayLevels?: boolean } = {}
+  {
+    colorFn,
+    displayLevels = false,
+  }: { colorFn?: ColorFn; displayLevels?: boolean } = {}
 ): Promise<string> {
   if (Array.isArray(svgOrSvgUriOrItems)) {
     return rarityImageFromItems(svgOrSvgUriOrItems);
@@ -111,7 +105,7 @@ export async function rarityImage(
     );
   }
 
-  return rarityImageFromItems(itemsFromSvg(svg), { displayLevels });
+  return rarityImageFromItems(itemsFromSvg(svg), { colorFn, displayLevels });
 }
 
 // deprecated

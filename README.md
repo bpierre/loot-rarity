@@ -25,14 +25,19 @@ pnpm add loot-rarity # pnpm
 
 ## API
 
-### RarityLevel
+### Types
 
 ```ts
-// RarityLevel goes from 1 (common) to 6 (mythic).
+// RarityLevel goes from 1 (common) to 6 (mythic). See table above for more info.
 type RarityLevel = 1 | 2 | 3 | 4 | 5 | 6;
-```
 
-This type is exported and represents a rarity level. See table above for the description of each level.
+// ColorFn allows to override a color in different places.
+type ColorFn = (colorParameters: {
+  level: RarityLevel; // the rarity level
+  color: string; // the base color you can override
+  itemName?: string; // in certain cases the item name will be present
+}) => string | void | null; // return a string to override the color
+```
 
 ### itemRarity()
 
@@ -53,7 +58,10 @@ console.log(rarity); // 6
 ### rarityColor()
 
 ```ts
-function rarityColor(itemOrRarityLevel: string | RarityLevel): string;
+function rarityColor(
+  itemOrRarityLevel: string | RarityLevel,
+  options?: { colorFn: ColorFn }
+): string;
 ```
 
 This function returns the color of a rarity level, given an item name or a rarity level.
@@ -87,7 +95,10 @@ console.log(levelB); // "Legendary"
 ### rarityImage()
 
 ```ts
-function rarityImage(imageOrItems: string | string[], { displayLevels?: Boolean }): Promise<string>;
+function rarityImage(
+  imageOrItems: string | string[],
+  options?: { colorFn?: ColorFn; displayLevels?: Boolean }
+): Promise<string>;
 ```
 
 This function generates an image with added rarity levels.
@@ -99,11 +110,8 @@ It accepts any of the following:
 - HTTP URL pointing to a Loot image.
 - Array of items.
 
-The `displayLevels` option allows to add levels to the items list.
-
-The resulting images look like this:
-
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/131525734-12f4b91c-7985-4c18-ab9d-a2a0376ed310.png">
+- The `displayLevels` option allows to add levels to the items list.
+- The `colorFn` option allows to override the color of a particular item.
 
 Example with React, [use-nft](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
 
@@ -119,13 +127,25 @@ function Loot({ tokenId }) {
 }
 ```
 
+The resulting images could look like this:
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/131557225-f3a3c22d-c9f9-4f66-ab21-4adb2971c979.png">
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/131558000-ea575347-71ff-4200-8857-aa9d79c88536.png">
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/131557222-785d5ba6-9535-440d-9e66-0c6a695c979e.png">
+
 ### rarityImageFromItems()
 
 ```ts
-function rarityImageFromItems(items: string[], { displayLevels?: Boolean }): string;
+function rarityImageFromItems(
+  items: string[],
+  options: { colorFn?: ColorFn; displayLevels?: Boolean }
+): string;
 ```
 
 This function is similar to rarityImage, except it only accepts an array of items. It is useful when you already have a list of items, because it returns a `string` directly (while `rarityImage()` returns a `Promise` resolving to a `string`).
+
+- The `displayLevels` option allows to add levels to the items list.
+- The `colorFn` option allows to override the color of a particular item.
 
 Example:
 
@@ -150,7 +170,7 @@ document.body.innerHTML = `
 
 ## Demo
 
-Have a look at [the demo app](https://ky7e7.csb.app/) on CodeSandbox to see how it works.
+Have a look at [the demo app](https://5e0cs.csb.app/) on CodeSandbox to see how it works.
 
 You can also run it from this repository:
 
