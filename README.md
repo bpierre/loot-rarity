@@ -101,7 +101,7 @@ It accepts any of the following:
 
 The `displayLevels` option allows to add levels to the items list.
 
-Example with React, [useNft()](https://github.com/spectrexyz/use-nft) (to load the image) and [swr](https://github.com/vercel/swr) (to handle the async function).
+Example with React, [useNft()](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
 
 ```jsx
 import { rarityImage } from "loot-rarity";
