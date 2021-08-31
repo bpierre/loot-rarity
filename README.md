@@ -80,7 +80,7 @@ Example:
 let levelA = rarityDescription(1);
 let levelB = rarityDescription("Studded Leather Boots of Rage");
 
-console.log(levelA); // 5
+console.log(levelA); // "Common"
 console.log(levelB); // "Legendary"
 ```
 
