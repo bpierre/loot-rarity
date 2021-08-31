@@ -6,8 +6,8 @@ Rarity levels for [Loot](https://lootproject.com) items.
 
 The rarity level of any given item is deducted from its number of occurrences in the total number of Loot items.
 
-| Rarity                                                                                                                                    | Description                                        | Occurrences           |
-| ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------- |
+| Rarity level                                                                                                                             | Description                                        | Occurrences           |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------- |
 | <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379065-5eef7b05-458c-4717-bfa8-c2d086283f0b.png"> Level 1 | **Common** items appear **375** or more times.     | 47.25% - 30,237 items |
 | <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379064-442c9a9e-90c9-4cb9-8fac-1ed0dbed5609.png"> Level 2 | **Uncommon** items appear less than **375** times. | 12.61% - 8,073 items  |
 | <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379063-1b6fa149-945f-467a-893e-e90eab48c20c.png"> Level 3 | **Rare** items appear less than **358** times.     | 11.78% - 7,537 items  |
@@ -25,24 +25,119 @@ pnpm add loot-rarity # pnpm
 
 ## API
 
-```tsx
-// Rarity goes from 1 (common) to 6 (mythic).
-type Rarity = 1 | 2 | 3 | 4 | 5 | 6;
+### RarityLevel
 
-// Get the rarity of an item given its name.
-function itemRarity(itemName: string): Rarity;
+```ts
+// RarityLevel goes from 1 (common) to 6 (mythic).
+type RarityLevel = 1 | 2 | 3 | 4 | 5 | 6;
+```
 
-// Get the color of an item given its name or rarity.
-function rarityColor(itemOrRarity: string | Rarity): string;
+This type is exported and represents a rarity level. See table above for the description of each level.
 
-// Get the description of a rarity given an item name or rarity level.
-function rarityDescription(itemOrRarity: string | Rarity): string;
+### itemRarity()
 
-// Transforms an SVG image (SVG, URL or data URI) to add rarity colors.
-function imageRarity(image: string, { displayLevels?: Boolean }): Promise<string>;
+This function returns the rarity level of an item, given its name.
 
-// Generates an image with colors from a list of items.
-function imageRarityFromItems(items: string[], { displayLevels?: Boolean }): string;
+```ts
+function itemRarity(itemName: string): RarityLevel;
+```
+
+Example:
+
+```js
+let rarity = itemRarity('"Golem Roar" Studded Leather Belt of Fury');
+
+console.log(rarity); // 6
+```
+
+### rarityColor()
+
+This function returns the color of a rarity level, given an item name or a rarity level.
+
+```ts
+function rarityColor(itemOrRarityLevel: string | RarityLevel): string;
+```
+
+Example:
+
+```js
+let color = rarityColor("Ornate Belt of Perfection");
+
+console.log(color); // "#c13cff"
+```
+
+### rarityDescription()
+
+This function returns the description of a rarity level, given an item name or a rarity level.
+
+```ts
+function rarityDescription(itemOrRarityLevel: string | RarityLevel): string;
+```
+
+Example:
+
+```js
+let levelA = rarityDescription(1);
+let levelB = rarityDescription("Studded Leather Boots of Rage");
+
+console.log(levelA); // 5
+console.log(levelB); // "Legendary"
+```
+
+### rarityImage()
+
+This function generates an image with added rarity levels.
+
+It accepts any of the following:
+
+- SVG source of a Loot image.
+- Data URI representing a Loot image (e.g. as returned by the `tokenURI()` method of the Loot contract).
+- HTTP URL pointing to a Loot image.
+- Array of items.
+
+```ts
+function rarityImage(imageOrItems: string | string[], { displayLevels?: Boolean }): Promise<string>;
+```
+
+The `displayLevels` option allows to add levels to the items list.
+
+Example with React, [useNft()](https://github.com/spectrexyz/use-nft) (to load the image) and [swr](https://github.com/vercel/swr) (to handle the async function).
+
+```jsx
+import { rarityImage } from "loot-rarity";
+import { useNft } from "use-nft";
+import useSWR from "swr";
+
+function Loot({ tokenId }) {
+  const { nft } = useNft(LOOT, id);
+  const { data: image } = useSWR(nft?.image, rarityImage);
+  return image ? <img src={image} /> : <div>Loading…</div>;
+}
+```
+
+### rarityImageFromItems()
+
+This function is similar to rarityImage, except it only accepts an array of items. It is useful when you already have a list of items, because it returns a `string` directly (while `rarityImage()` returns a `Promise` resolving to a `string`).
+
+Example:
+
+```js
+import { rarityImageFromItems } from "loot-rarity";
+
+const bag = [
+  "Grimoire",
+  '"Woe Bite" Ornate Chestplate of the Fox +1',
+  "Silk Hood",
+  "Heavy Belt of Fury",
+  "Shoes",
+  "Silk Gloves",
+  '"Rune Glow" Amulet of Rage',
+  "Silver Ring",
+];
+
+document.body.innerHTML = `
+  <img src=${rarityImageFromItems(bag)} />
+`;
 ```
 
 ## Demo
