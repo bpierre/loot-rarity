@@ -110,8 +110,8 @@ It accepts any of the following:
 - HTTP URL pointing to a Loot image.
 - Array of items.
 
-The `displayLevels` option allows to add levels to the items list.
-The `colorFn` option allows to override the color of a particular item.
+- The `displayLevels` option allows to add levels to the items list.
+- The `colorFn` option allows to override the color of a particular item.
 
 Example with React, [use-nft](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
 
@@ -136,10 +136,16 @@ The resulting images could look like this:
 ### rarityImageFromItems()
 
 ```ts
-function rarityImageFromItems(items: string[], { displayLevels?: Boolean }): string;
+function rarityImageFromItems(
+  items: string[],
+  options: { colorFn?: ColorFn; displayLevels?: Boolean }
+): string;
 ```
 
 This function is similar to rarityImage, except it only accepts an array of items. It is useful when you already have a list of items, because it returns a `string` directly (while `rarityImage()` returns a `Promise` resolving to a `string`).
+
+- The `displayLevels` option allows to add levels to the items list.
+- The `colorFn` option allows to override the color of a particular item.
 
 Example:
 
@@ -164,7 +170,7 @@ document.body.innerHTML = `
 
 ## Demo
 
-Have a look at [the demo app](https://ky7e7.csb.app/) on CodeSandbox to see how it works.
+Have a look at [the demo app](https://5e0cs.csb.app/) on CodeSandbox to see how it works.
 
 You can also run it from this repository:
 
