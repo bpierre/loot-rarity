@@ -103,7 +103,7 @@ The `displayLevels` option allows to add levels to the items list.
 
 The resulting images look like this:
 
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/131524734-04b68742-7234-4667-a836-839b82745bb9.png">
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/131525734-12f4b91c-7985-4c18-ab9d-a2a0376ed310.png">
 
 Example with React, [use-nft](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
 
