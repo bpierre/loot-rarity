@@ -113,12 +113,6 @@ It accepts any of the following:
 The `displayLevels` option allows to add levels to the items list.
 The `colorFn` option allows to override the color of a particular item.
 
-The resulting images could look like this:
-
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/131557222-785d5ba6-9535-440d-9e66-0c6a695c979e.png">
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/131557223-00d753bf-35fb-4e6b-9fb2-f5da2a9c7efc.png">
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/131557225-f3a3c22d-c9f9-4f66-ab21-4adb2971c979.png">
-
 Example with React, [use-nft](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
 
 ```jsx
@@ -132,6 +126,12 @@ function Loot({ tokenId }) {
   return image ? <img src={image} /> : <div>Loading…</div>;
 }
 ```
+
+The resulting images could look like this:
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/131557225-f3a3c22d-c9f9-4f66-ab21-4adb2971c979.png">
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/131557223-00d753bf-35fb-4e6b-9fb2-f5da2a9c7efc.png">
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/131557222-785d5ba6-9535-440d-9e66-0c6a695c979e.png">
 
 ### rarityImageFromItems()
 
