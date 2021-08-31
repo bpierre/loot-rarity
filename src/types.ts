@@ -1,10 +1,14 @@
 export type RarityLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
-export type ColorFn = (colorParameters: {
+export type ColorFnParameters = {
   color: string;
   itemName?: string;
   level: RarityLevel;
-}) => string | void | null;
+};
+
+export type ColorFn = (
+  params: ColorFnParameters
+) => string | void | null | false;
 
 /**
  * @deprecated Please use RarityLevel instead
