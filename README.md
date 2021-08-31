@@ -36,11 +36,11 @@ This type is exported and represents a rarity level. See table above for the des
 
 ### itemRarity()
 
-This function returns the rarity level of an item, given its name.
-
 ```ts
 function itemRarity(itemName: string): RarityLevel;
 ```
+
+This function returns the rarity level of an item, given its name.
 
 Example:
 
@@ -52,11 +52,11 @@ console.log(rarity); // 6
 
 ### rarityColor()
 
-This function returns the color of a rarity level, given an item name or a rarity level.
-
 ```ts
 function rarityColor(itemOrRarityLevel: string | RarityLevel): string;
 ```
+
+This function returns the color of a rarity level, given an item name or a rarity level.
 
 Example:
 
@@ -68,11 +68,11 @@ console.log(color); // "#c13cff"
 
 ### rarityDescription()
 
-This function returns the description of a rarity level, given an item name or a rarity level.
-
 ```ts
 function rarityDescription(itemOrRarityLevel: string | RarityLevel): string;
 ```
+
+This function returns the description of a rarity level, given an item name or a rarity level.
 
 Example:
 
@@ -86,6 +86,10 @@ console.log(levelB); // "Legendary"
 
 ### rarityImage()
 
+```ts
+function rarityImage(imageOrItems: string | string[], { displayLevels?: Boolean }): Promise<string>;
+```
+
 This function generates an image with added rarity levels.
 
 It accepts any of the following:
@@ -94,10 +98,6 @@ It accepts any of the following:
 - Data URI representing a Loot image (e.g. as returned by the `tokenURI()` method of the Loot contract).
 - HTTP URL pointing to a Loot image.
 - Array of items.
-
-```ts
-function rarityImage(imageOrItems: string | string[], { displayLevels?: Boolean }): Promise<string>;
-```
 
 The `displayLevels` option allows to add levels to the items list.
 
@@ -116,6 +116,10 @@ function Loot({ tokenId }) {
 ```
 
 ### rarityImageFromItems()
+
+```ts
+function rarityImageFromItems(items: string[], { displayLevels?: Boolean }): string;
+```
 
 This function is similar to rarityImage, except it only accepts an array of items. It is useful when you already have a list of items, because it returns a `string` directly (while `rarityImage()` returns a `Promise` resolving to a `string`).
 
