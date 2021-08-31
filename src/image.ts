@@ -1,15 +1,28 @@
-import type { RarityLevel } from "./types";
+import type { ColorFn, RarityLevel } from "./types";
 
 import { itemRarity } from "./index";
 import rarityLevels from "./rarity-levels";
 import { warnDeprecatedName } from "./utils";
 
+function levelsSvgStyles(levels: RarityLevel[], colorFn?: ColorFn) {
+  return rarityLevels
+    .map(([_, color], index) => {
+      const level = (index + 1) as RarityLevel;
+      return levels.includes(level)
+        ? `.level-${level} { fill: ${colorFn?.({ color, level }) ?? color}; }`
+        : "";
+    })
+    .join("");
+}
+
 export function svgFromItems(
   items: string[],
   {
+    colorFn,
     levels,
     displayLevels = false,
   }: {
+    colorFn?: ColorFn;
     displayLevels?: boolean;
     levels?: RarityLevel[];
   } = {}
@@ -17,15 +30,7 @@ export function svgFromItems(
   if (items.length !== 8) {
     throw new Error("A bag should contain exactly 8 items");
   }
-  const levelStyles = levels
-    ? rarityLevels
-        .map(([_, color], index) => {
-          return !levels.includes((index + 1) as RarityLevel)
-            ? ""
-            : `.level-${index + 1} { fill: ${color}; }`;
-        })
-        .join("")
-    : "";
+  const levelStyles = levels ? levelsSvgStyles(levels, colorFn) : "";
   return (
     '<svg xmlns="http://www.w3.org/2000/svg" ' +
     'preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350">' +
@@ -83,10 +88,14 @@ export function isUri(data: string) {
 
 export function rarityImageFromItems(
   items: string[],
-  { displayLevels = false }: { displayLevels?: boolean } = {}
+  {
+    colorFn,
+    displayLevels = false,
+  }: { colorFn?: ColorFn; displayLevels?: boolean } = {}
 ): string {
   return svgDataUri(
     svgFromItems(items, {
+      colorFn,
       displayLevels,
       levels: items.map(itemRarity),
     })
@@ -95,7 +104,10 @@ export function rarityImageFromItems(
 
 export async function rarityImage(
   svgOrSvgUriOrItems: string | string[],
-  { displayLevels = false }: { displayLevels?: boolean } = {}
+  {
+    colorFn,
+    displayLevels = false,
+  }: { colorFn?: ColorFn; displayLevels?: boolean } = {}
 ): Promise<string> {
   if (Array.isArray(svgOrSvgUriOrItems)) {
     return rarityImageFromItems(svgOrSvgUriOrItems);
@@ -111,7 +123,7 @@ export async function rarityImage(
     );
   }
 
-  return rarityImageFromItems(itemsFromSvg(svg), { displayLevels });
+  return rarityImageFromItems(itemsFromSvg(svg), { colorFn, displayLevels });
 }
 
 // deprecated
