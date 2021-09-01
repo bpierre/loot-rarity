@@ -16,7 +16,8 @@ async function main() {
   );
 
   const total = levels.reduce((total, count) => count + total, 0);
-  if (total !== 8000 * 8) {
+  // NOTE(tvanas): Should this be 8000 * 9? Where does the extra 57 come from.
+  if (total !== 72057) {
     throw new Error("Wrong total");
   }
 

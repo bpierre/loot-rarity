@@ -1,7 +1,7 @@
 import type { ColorFn, RarityLevel } from "./types";
 
 import itemsRarity from "../data/items-rarity-hashes.json";
-import { hashItem } from "./hash-item";
+import shortHash from "shorthash2";
 import rarityLevels from "./rarity-levels";
 
 let cachedItemsrarity = null;
@@ -13,7 +13,7 @@ export function itemRarity(itemName: string): RarityLevel {
     );
   }
 
-  const hash = hashItem(itemName);
+  const hash = shortHash(itemName);
 
   let index = 6;
   while (index--) {
