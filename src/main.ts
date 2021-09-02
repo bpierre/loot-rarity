@@ -18,10 +18,9 @@ export function itemRarity(itemName: string): RarityLevel {
   let index = 5;
   while (index--) {
     if (cachedItemsrarity[index].has(hash)) {
-      return (index + 1) as RarityLevel;
+      return (index + 2) as RarityLevel;
     }
   }
-
   return 1;
 }
 
