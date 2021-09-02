@@ -1,5 +1,5 @@
 import occurences from "../data/occurences.json";
-import { scoreFromOccurences } from "./utils";
+import { levelFromOccurences } from "./utils";
 import { rarityDescription, RarityLevel } from "../src";
 import rarityLevels from "../src/rarity-levels";
 
@@ -8,7 +8,7 @@ type Occurences = Record<string, number>;
 async function main() {
   const levels = Object.values(occurences as Occurences).reduce(
     (levels, occurences) => {
-      const level = scoreFromOccurences(occurences);
+      const level = levelFromOccurences(occurences);
       levels[level - 1] += occurences;
       return levels;
     },

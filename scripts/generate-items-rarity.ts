@@ -1,6 +1,6 @@
 import { hashItem } from "../src/hash-item";
 import occurences from "../data/occurences.json";
-import { scoreFromOccurences } from "./utils";
+import { levelFromOccurences } from "./utils";
 
 type Occurences = Record<string, number>;
 
@@ -15,17 +15,26 @@ async function main() {
     throw new Error("Collision! Please check src/hash-item.ts");
   }
 
-  const byScore = hashedItems.reduce(
-    (byScore: string[], [hash, occurences]) => {
-      const score = scoreFromOccurences(Number(occurences));
-      const scoreHashes = byScore[score - 1] ?? "";
-      byScore[score - 1] = scoreHashes + hash;
-      return byScore;
+  const byLevel = hashedItems.reduce(
+    (byLevel: string[], [hash, occurences]) => {
+      const level = levelFromOccurences(Number(occurences));
+
+      // No need to store common items, unknown items are always common
+      if (level === 1) {
+        return byLevel;
+      }
+
+      // so that e.g. level 2 is at index 0
+      const index = level - 2;
+
+      const levelHashes = byLevel[index] ?? "";
+      byLevel[index] = levelHashes + hash;
+      return byLevel;
     },
     []
   );
 
-  console.log(JSON.stringify(byScore));
+  console.log(JSON.stringify(byLevel));
 }
 
 main()
