@@ -1,12 +1,7 @@
 import type { ColorFn } from "./types";
 
 import { rarityColor, rarityDescription } from "./main";
-import {
-  dataUri,
-  fetchOrDecodeDataUri,
-  isUri,
-  warnDeprecatedName,
-} from "./utils";
+import { dataUri, fetchOrDecodeDataUri, isUri } from "./utils";
 
 type Options = {
   colorFn?: ColorFn;
@@ -92,20 +87,4 @@ export async function rarityImage(
 
   const items = itemsFromSvg(svg);
   return rarityImageFromItems(items, options);
-}
-
-// deprecated
-
-export function imageRarityFromItems(
-  ...params: Parameters<typeof rarityImageFromItems>
-): ReturnType<typeof rarityImageFromItems> {
-  warnDeprecatedName("imageRarityFromItems()", "rarityImageFromItems()");
-  return rarityImageFromItems(...params);
-}
-
-export function imageRarity(
-  ...params: Parameters<typeof rarityImage>
-): ReturnType<typeof rarityImage> {
-  warnDeprecatedName("imageRarity()", "rarityImage()");
-  return rarityImage(...params);
 }

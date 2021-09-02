@@ -9,8 +9,3 @@ export type ColorFnParameters = {
 export type ColorFn = (
   params: ColorFnParameters
 ) => string | void | null | false;
-
-/**
- * @deprecated Please use RarityLevel instead
- */
-export type Rarity = RarityLevel;
