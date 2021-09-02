@@ -1,6 +1,6 @@
 {
   "name": "loot-rarity",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Get the rarity level of a Loot (lootproject.com) item",
   "author": "Pierre Bertet",
   "license": "MIT",
