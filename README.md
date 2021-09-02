@@ -97,7 +97,11 @@ console.log(levelB); // "Legendary"
 ```ts
 function rarityImage(
   imageOrItems: string | string[],
-  options?: { colorFn?: ColorFn; displayLevels?: Boolean }
+  options?: {
+    colorFn?: ColorFn;
+    displayLevels?: Boolean;
+    imageFormat: "data-uri" | "svg";
+  }
 ): Promise<string>;
 ```
 
@@ -111,8 +115,9 @@ It accepts any of the following:
 - Data URI representing a Loot metadata (as returned by the `tokenURI()` method of the Loot contract).
 - HTTP URL pointing to a Loot image.
 
-- The `displayLevels` option allows to add levels to the items list.
 - The `colorFn` option allows to override the color of a particular item.
+- The `displayLevels` option allows to add levels to the items list.
+- The `imageFormat` option controls the output: data URI (`"data-uri"`) (default) or SVG source (`"svg"`).
 
 Example with React, [use-nft](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
 
@@ -139,14 +144,19 @@ The resulting images could look like this:
 ```ts
 function rarityImageFromItems(
   items: string[],
-  options: { colorFn?: ColorFn; displayLevels?: Boolean }
+  options: {
+    colorFn?: ColorFn;
+    displayLevels?: Boolean;
+    imageFormat: "data-uri" | "svg";
+  }
 ): string;
 ```
 
 This function is similar to rarityImage, except it only accepts an array of items. It is useful when you already have a list of items, because it returns a `string` directly (while `rarityImage()` returns a `Promise` resolving to a `string`).
 
-- The `displayLevels` option allows to add levels to the items list.
 - The `colorFn` option allows to override the color of a particular item.
+- The `displayLevels` option allows to add levels to the items list.
+- The `imageFormat` option controls the output: data URI (`"data-uri"`) (default) or SVG source (`"svg"`).
 
 Example:
 
