@@ -1,5 +1,5 @@
 {
-  "include": ["src", "scripts"],
+  "include": ["src", "scripts", "test"],
   "compilerOptions": {
     "target": "ES2020",
     "lib": ["DOM", "ESNext"],
