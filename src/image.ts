@@ -67,6 +67,9 @@ export function rarityImageFromItems(
   return imageFormat === "data-uri" ? dataUri("image/svg+xml", svg) : svg;
 }
 
+const INPUT_ERROR =
+  "The resource doesn’t seem to be a Loot SVG, a Loot metadata, or a URL pointing to it";
+
 export async function rarityImage(
   svgOrSvgUriOrItems: string | string[],
   options?: Options
@@ -75,14 +78,24 @@ export async function rarityImage(
     return rarityImageFromItems(svgOrSvgUriOrItems);
   }
 
-  const svg = isUri(svgOrSvgUriOrItems)
-    ? await fetchOrDecodeDataUri(svgOrSvgUriOrItems)
-    : svgOrSvgUriOrItems;
+  let svg = svgOrSvgUriOrItems;
+
+  // Accepts the metadata string as returned by tokenURI()
+  if (svg.startsWith("data:application/json")) {
+    try {
+      svg = JSON.parse(await fetchOrDecodeDataUri(svg)).image;
+    } catch (err) {
+      throw new Error(INPUT_ERROR);
+    }
+  }
+
+  // Fetch URLs or parse data URIs
+  if (isUri(svg)) {
+    svg = await fetchOrDecodeDataUri(svg);
+  }
 
   if (!svg.startsWith("<svg")) {
-    throw new Error(
-      "The resource doesn’t seem to be an SVG or a URL pointing to an SVG"
-    );
+    throw new Error(INPUT_ERROR);
   }
 
   const items = itemsFromSvg(svg);
