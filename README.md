@@ -1,6 +1,6 @@
 <img width="1280" alt="Loot Rarity" src="https://user-images.githubusercontent.com/36158/131556816-cf5861c7-8619-4b56-9d90-f538ebb86f74.png">
 
-Rarity levels for [Loot](https://lootproject.com) items.
+Rarity levels for [Loot](https://lootproject.com).
 
 ## How are the rarity levels determined?
 
@@ -106,9 +106,10 @@ This function generates an image with added rarity levels.
 It accepts any of the following:
 
 - SVG source of a Loot image.
-- Data URI representing a Loot image (e.g. as returned by the `tokenURI()` method of the Loot contract).
+- An array of Loot items.
+- Data URI representing a Loot image.
+- Data URI representing a Loot metadata (as returned by the `tokenURI()` method of the Loot contract).
 - HTTP URL pointing to a Loot image.
-- Array of items.
 
 - The `displayLevels` option allows to add levels to the items list.
 - The `colorFn` option allows to override the color of a particular item.

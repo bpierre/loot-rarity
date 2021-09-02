@@ -1,12 +1,7 @@
 import type { ColorFn } from "./types";
 
 import { rarityColor, rarityDescription } from "./main";
-import {
-  dataUri,
-  fetchOrDecodeDataUri,
-  isUri,
-  warnDeprecatedName,
-} from "./utils";
+import { dataUri, fetchOrDecodeDataUri, isUri } from "./utils";
 
 type Options = {
   colorFn?: ColorFn;
@@ -72,6 +67,9 @@ export function rarityImageFromItems(
   return imageFormat === "data-uri" ? dataUri("image/svg+xml", svg) : svg;
 }
 
+const INPUT_ERROR =
+  "The resource doesn’t seem to be a Loot SVG, a Loot metadata, or a URL pointing to it";
+
 export async function rarityImage(
   svgOrSvgUriOrItems: string | string[],
   options?: Options
@@ -80,32 +78,26 @@ export async function rarityImage(
     return rarityImageFromItems(svgOrSvgUriOrItems);
   }
 
-  const svg = isUri(svgOrSvgUriOrItems)
-    ? await fetchOrDecodeDataUri(svgOrSvgUriOrItems)
-    : svgOrSvgUriOrItems;
+  let svg = svgOrSvgUriOrItems;
+
+  // Accepts the metadata string as returned by tokenURI()
+  if (svg.startsWith("data:application/json")) {
+    try {
+      svg = JSON.parse(await fetchOrDecodeDataUri(svg)).image;
+    } catch (err) {
+      throw new Error(INPUT_ERROR);
+    }
+  }
+
+  // Fetch URLs or parse data URIs
+  if (isUri(svg)) {
+    svg = await fetchOrDecodeDataUri(svg);
+  }
 
   if (!svg.startsWith("<svg")) {
-    throw new Error(
-      "The resource doesn’t seem to be an SVG or a URL pointing to an SVG"
-    );
+    throw new Error(INPUT_ERROR);
   }
 
   const items = itemsFromSvg(svg);
   return rarityImageFromItems(items, options);
-}
-
-// deprecated
-
-export function imageRarityFromItems(
-  ...params: Parameters<typeof rarityImageFromItems>
-): ReturnType<typeof rarityImageFromItems> {
-  warnDeprecatedName("imageRarityFromItems()", "rarityImageFromItems()");
-  return rarityImageFromItems(...params);
-}
-
-export function imageRarity(
-  ...params: Parameters<typeof rarityImage>
-): ReturnType<typeof rarityImage> {
-  warnDeprecatedName("imageRarity()", "rarityImage()");
-  return rarityImage(...params);
 }
