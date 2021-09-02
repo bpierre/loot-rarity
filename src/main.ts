@@ -15,14 +15,14 @@ export function itemRarity(itemName: string): RarityLevel {
 
   const hash = hashItem(itemName);
 
-  let index = 6;
+  let index = 5;
   while (index--) {
     if (cachedItemsrarity[index].has(hash)) {
       return (index + 1) as RarityLevel;
     }
   }
 
-  throw new Error(`The item name couldn’t be found: “${itemName}”`);
+  return 1;
 }
 
 export function rarityColor(
