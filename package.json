@@ -15,11 +15,16 @@
   "scripts": {
     "build": "tsup --dts --format esm,cjs --target=es2020",
     "dev": "tsup --watch --dts --format esm,cjs --target=es2020",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "generate-rarity": "ts-node scripts/generate-items-rarity.ts > data/items-rarity-hashes.json",
     "check-distribution": "ts-node scripts/rarity-distribution.ts"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.1",
     "@types/node": "^16.7.5",
+    "jest": "^27.1.0",
+    "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
     "tslib": "^2.3.1",
     "tsup": "^4.14.0",
@@ -30,11 +35,10 @@
     "sourcemap": true,
     "clean": true,
     "entryPoints": [
-      "src/index.ts",
-      "src/index-node.ts"
+      "src/index.ts"
     ]
   },
   "dependencies": {
-    "isomorphic-fetch": "^3.0.0"
+    "cross-fetch": "^3.1.4"
   }
 }

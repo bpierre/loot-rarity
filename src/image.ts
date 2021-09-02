@@ -1,7 +1,18 @@
 import type { ColorFn } from "./types";
 
 import { rarityColor, rarityDescription } from "./main";
-import { warnDeprecatedName } from "./utils";
+import {
+  dataUri,
+  fetchOrDecodeDataUri,
+  isUri,
+  warnDeprecatedName,
+} from "./utils";
+
+type Options = {
+  colorFn?: ColorFn;
+  displayLevels?: boolean;
+  imageFormat?: "data-uri" | "svg";
+};
 
 const SVG_START =
   '<svg xmlns="http://www.w3.org/2000/svg" ' +
@@ -13,42 +24,7 @@ const SVG_START =
   '<rect width="100%" height="100%" fill="black" />';
 const SVG_END = "</svg>";
 
-export function svgFromItems(
-  items: string[],
-  {
-    colorFn,
-    displayLevels = false,
-  }: {
-    colorFn?: ColorFn;
-    displayLevels?: boolean;
-  } = {}
-) {
-  if (items.length !== 8) {
-    throw new Error("A bag should contain exactly 8 items");
-  }
-  return (
-    SVG_START +
-    items
-      .map((item, index) => {
-        const y = 20 * (index + 1);
-        const level = displayLevels
-          ? ` (${rarityDescription(item).slice(0, 1)})`
-          : "";
-        const color = rarityColor(item, { colorFn });
-        return (
-          `<text x="10" y="${y}" fill="${color}">` + item + level + `</text>`
-        );
-      })
-      .join("") +
-    SVG_END
-  );
-}
-
-export function svgDataUri(svg: string): string {
-  return "data:image/svg+xml," + encodeURIComponent(svg);
-}
-
-const MATCH_TEXT_RE = /<text[^>]+\>([^<]+)<\/text>/;
+const MATCH_ITEM_TEXT = /<text[^>]+\>([^<]+)<\/text>/;
 
 export function itemsFromSvg(svg: string) {
   if (!svg.startsWith("<svg")) {
@@ -58,7 +34,7 @@ export function itemsFromSvg(svg: string) {
   let matches: null | string[];
   const items = [];
   for (let i = 0; i < 8; i++) {
-    matches = svg.match(MATCH_TEXT_RE);
+    matches = svg.match(MATCH_ITEM_TEXT);
     if (!matches) {
       throw new Error(
         "Error when parsing the SVG: couldn’t find the next item"
@@ -70,33 +46,42 @@ export function itemsFromSvg(svg: string) {
   return items;
 }
 
-export function isUri(data: string) {
-  return /^(?:https?|data)\:/.test(data);
-}
-
 export function rarityImageFromItems(
   items: string[],
-  {
-    colorFn,
-    displayLevels = false,
-  }: { colorFn?: ColorFn; displayLevels?: boolean } = {}
-): string {
-  return svgDataUri(svgFromItems(items, { colorFn, displayLevels }));
+  { colorFn, imageFormat = "data-uri", displayLevels = false }: Options = {}
+) {
+  if (items.length !== 8) {
+    throw new Error("A bag should contain exactly 8 items");
+  }
+
+  const svg = [
+    SVG_START,
+    ...items.map((item, index) => {
+      const y = 20 * (index + 1);
+      const level = displayLevels
+        ? ` (${rarityDescription(item).slice(0, 1)})`
+        : "";
+      const color = rarityColor(item, { colorFn });
+      return (
+        `<text x="10" y="${y}" fill="${color}">` + item + level + `</text>`
+      );
+    }),
+    SVG_END,
+  ].join("");
+
+  return imageFormat === "data-uri" ? dataUri("image/svg+xml", svg) : svg;
 }
 
 export async function rarityImage(
   svgOrSvgUriOrItems: string | string[],
-  {
-    colorFn,
-    displayLevels = false,
-  }: { colorFn?: ColorFn; displayLevels?: boolean } = {}
+  options?: Options
 ): Promise<string> {
   if (Array.isArray(svgOrSvgUriOrItems)) {
     return rarityImageFromItems(svgOrSvgUriOrItems);
   }
 
   const svg = isUri(svgOrSvgUriOrItems)
-    ? await fetch(svgOrSvgUriOrItems).then((res) => res.text())
+    ? await fetchOrDecodeDataUri(svgOrSvgUriOrItems)
     : svgOrSvgUriOrItems;
 
   if (!svg.startsWith("<svg")) {
@@ -105,7 +90,8 @@ export async function rarityImage(
     );
   }
 
-  return rarityImageFromItems(itemsFromSvg(svg), { colorFn, displayLevels });
+  const items = itemsFromSvg(svg);
+  return rarityImageFromItems(items, options);
 }
 
 // deprecated
