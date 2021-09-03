@@ -31,9 +31,13 @@ export function itemsFromSvg(svg: string) {
   for (let i = 0; i < 8; i++) {
     matches = svg.match(MATCH_ITEM_TEXT);
     if (!matches) {
-      throw new Error(
-        "Error when parsing the SVG: couldn’t find the next item"
-      );
+      if (items.length === 0) {
+        throw new Error(
+          "Error when parsing the SVG: couldn’t find the next item"
+        );
+      }
+      // Probably a LootLoose image
+      return items;
     }
     items.push(matches[1]);
     svg = svg.slice(svg.indexOf(matches[0]) + matches[0].length);
@@ -45,8 +49,8 @@ export function rarityImageFromItems(
   items: string[],
   { colorFn, imageFormat = "data-uri", displayLevels = false }: Options = {}
 ) {
-  if (items.length !== 8) {
-    throw new Error("A bag should contain exactly 8 items");
+  if (items.length < 1) {
+    throw new Error("A bag should contain at least one item");
   }
 
   const svg = [

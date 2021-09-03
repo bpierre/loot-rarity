@@ -32,6 +32,15 @@ const BAG_1_IMAGE_TRANSFORMED_WITH_COLORS =
 const BAG_1_IMAGE_TRANSFORMED_AS_SVG =
   '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350"><style>text { font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" /><text x="10" y="20" fill="#f8b73e">"Grim Shout" Grave Wand of Skill +1</text><text x="10" y="40" fill="#838383">Hard Leather Armor</text><text x="10" y="60" fill="#838383">Divine Hood</text><text x="10" y="80" fill="#2e82ff">Hard Leather Belt</text><text x="10" y="100" fill="#ff44b7">"Death Root" Ornate Greaves of Skill</text><text x="10" y="120" fill="#838383">Studded Leather Gloves</text><text x="10" y="140" fill="#c13cff">Necklace of Enlightenment</text><text x="10" y="160" fill="#838383">Gold Ring</text></svg>';
 
+const LOOT_LOOSE_METADATA =
+  "data:application/json;base64,eyAibmFtZSI6ICJEaXZpbmUgUm9iZSIsICJkZXNjcmlwdGlvbiIgOiAiTG9vdExvb3NlIGxldHMgeW91IHVuYnVuZGxlIHlvdXIgTG9vdCBCYWdzIGludG8gaW5kaXZpZHVhbCBFUkMxMTU1IE5GVHMgb3IgcmVidW5kbGUgaXRlbXMgaW50byB0aGVpciBvcmlnaW5hbCBMb290IEJhZ3MuIiwgImltYWdlIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIQnlaWE5sY25abFFYTndaV04wVW1GMGFXODlJbmhOYVc1WlRXbHVJRzFsWlhRaUlIWnBaWGRDYjNnOUlqQWdNQ0F6TlRBZ016VXdJajQ4YzNSNWJHVStMbUpoYzJVZ2V5Qm1hV3hzT2lCM2FHbDBaVHNnWm05dWRDMW1ZVzFwYkhrNklITmxjbWxtT3lCbWIyNTBMWE5wZW1VNklERTBjSGc3SUgwOEwzTjBlV3hsUGp4eVpXTjBJSGRwWkhSb1BTSXhNREFsSWlCb1pXbG5hSFE5SWpFd01DVWlJR1pwYkd3OUltSnNZV05ySWlBdlBqeDBaWGgwSUhnOUlqRXdJaUI1UFNJeU1DSWdZMnhoYzNNOUltSmhjMlVpUGtScGRtbHVaU0JTYjJKbFBDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0kwTUNJZ1kyeGhjM005SW1KaGMyVWlQand2ZEdWNGRENDhMM04yWno0PSIsICJhdHRyaWJ1dGVzIjogW3sidHJhaXRfdHlwZSI6ICJTbG90IiwgInZhbHVlIjogIkNoZXN0In0sIHsidHJhaXRfdHlwZSI6ICJJdGVtIiwgInZhbHVlIjogIkRpdmluZSBSb2JlIn1dfQ==";
+
+const LOOT_LOOSE_TRANSFORMED =
+  "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20preserveAspectRatio%3D%22xMinYMin%20meet%22%20viewBox%3D%220%200%20350%20350%22%3E%3Cstyle%3Etext%20%7B%20font-family%3A%20serif%3B%20font-size%3A%2014px%3B%20%7D%3C%2Fstyle%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22black%22%20%2F%3E%3Ctext%20x%3D%2210%22%20y%3D%2220%22%20fill%3D%22%23838383%22%3EDivine%20Robe%3C%2Ftext%3E%3C%2Fsvg%3E";
+
+const LOOT_LOOSE_TRANSFORMED_WITH_COLORS =
+  "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20preserveAspectRatio%3D%22xMinYMin%20meet%22%20viewBox%3D%220%200%20350%20350%22%3E%3Cstyle%3Etext%20%7B%20font-family%3A%20serif%3B%20font-size%3A%2014px%3B%20%7D%3C%2Fstyle%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22black%22%20%2F%3E%3Ctext%20x%3D%2210%22%20y%3D%2220%22%20fill%3D%22cyan%22%3EDivine%20Robe%3C%2Ftext%3E%3C%2Fsvg%3E";
+
 describe("rarityImage()", () => {
   test("with a remote URL", async () => {
     const img = await rarityImage(BAG_1_IMAGE_URL);
@@ -49,6 +58,10 @@ describe("rarityImage()", () => {
     const img = await rarityImage(BAG_1_METADATA);
     expect(img).toBe(BAG_1_IMAGE_TRANSFORMED);
   });
+  test("with a LootLoose metadata", async () => {
+    const img = await rarityImage(LOOT_LOOSE_METADATA);
+    expect(img).toBe(LOOT_LOOSE_TRANSFORMED);
+  });
   test("with levels displayed", async () => {
     const img = await rarityImage(BAG_1_METADATA_IMAGE, {
       displayLevels: true,
@@ -60,6 +73,12 @@ describe("rarityImage()", () => {
       colorFn: ({ itemName }) => itemName.includes("Greaves") && "green",
     });
     expect(img).toBe(BAG_1_IMAGE_TRANSFORMED_WITH_COLORS);
+  });
+  test("with LootLoose metadata and custom colors", async () => {
+    const img = await rarityImage(LOOT_LOOSE_METADATA, {
+      colorFn: ({ itemName }) => itemName.includes("Divine") && "cyan",
+    });
+    expect(img).toBe(LOOT_LOOSE_TRANSFORMED_WITH_COLORS);
   });
   test("as SVG", async () => {
     const img = await rarityImage(BAG_1_METADATA_IMAGE, {
