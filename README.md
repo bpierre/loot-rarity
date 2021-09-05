@@ -5,9 +5,9 @@ Rarity levels for [Loot](https://lootproject.com).
 ## How are the rarity levels determined?
 
 The rarity level of any given item is deducted from its number of occurrences in the total number of Loot items.
-
+ 
 | Rarity level                                                                                                                             | Description                                        | Occurrences           |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------- |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------- | --------------------: |
 | <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379065-5eef7b05-458c-4717-bfa8-c2d086283f0b.png"> Level 1 | **Common** items appear **375** or more times.     | 47.25% - 30,237 items |
 | <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379064-442c9a9e-90c9-4cb9-8fac-1ed0dbed5609.png"> Level 2 | **Uncommon** items appear less than **375** times. | 12.61% - 8,073 items  |
 | <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379063-1b6fa149-945f-467a-893e-e90eab48c20c.png"> Level 3 | **Rare** items appear less than **358** times.     | 11.78% - 7,537 items  |
