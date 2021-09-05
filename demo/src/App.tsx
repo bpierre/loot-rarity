@@ -1,17 +1,76 @@
-import React, { useState } from "react";
-import { randomBagId, useBag } from "./hooks";
+import React, { useMemo, useState } from "react";
+import { useBag } from "./hooks";
+import guilds from "./guilds";
+
+type Option = {
+  label: string;
+  checked: boolean;
+  toggle: () => void;
+};
+
+function randomBagId() {
+  return String(Math.floor(Math.random() * 7999) + 1);
+}
 
 function App() {
   const [bagId, setBagId] = useState(randomBagId());
-  const [svgMode, setSvgMode] = useState(false);
-  const bag = useBag(bagId);
+
+  const [activeGuilds, setActiveGuilds] = useState<boolean[]>(
+    Object.keys(guilds).map(() => false)
+  );
+
+  const [about, setAbout] = useState(false);
+  const [displayColors, setDisplayColors] = useState(true);
+  const [displayLevels, setDisplayLevels] = useState(false);
+
+  const guildOptions = useMemo<Option[]>(
+    () =>
+      guilds.map((guild, index) => ({
+        ...guild,
+        label: guild.emoji,
+        checked: activeGuilds[index],
+        toggle: () =>
+          setActiveGuilds((activeGuilds) =>
+            activeGuilds.map((checked, _index) =>
+              _index === index ? !checked : checked
+            )
+          ),
+      })),
+    [activeGuilds]
+  );
+
+  const modesOptions = useMemo<Option[]>(
+    () => [
+      {
+        label: "on",
+        checked: displayColors,
+        toggle: () => setDisplayColors((v) => !v),
+      },
+      {
+        label: "labels",
+        checked: displayLevels,
+        toggle: () => setDisplayLevels((v) => !v),
+      },
+    ],
+    [displayLevels, displayColors]
+  );
+
+  const bag = useBag(
+    bagId,
+    [...guilds].filter((_, index) => activeGuilds[index]),
+    { displayColors, displayLevels }
+  );
+
+  const activeGuildsDescriptions = guilds.filter(
+    (_, index) => activeGuilds[index]
+  );
+
   return (
     <div className="app">
-      <div className="header">
-        <h1>Loot Rarity Demo</h1>
+      <header>
+        <h1>Loot Rarity</h1>
         <h2>
           <label htmlFor="bag-input">Bag #</label>
-
           <input
             id="bag-input"
             type="text"
@@ -30,44 +89,91 @@ function App() {
           />
           <button onClick={() => setBagId(randomBagId())}>random</button>
         </h2>
-        <div className="svg-mode">
-          <label>
-            svg mode
-            <input
-              type="checkbox"
-              checked={svgMode}
-              onChange={() => setSvgMode((v) => !v)}
-            />
-          </label>
-        </div>
-      </div>
-      {bag &&
-        (svgMode ? (
-          <div className="bag">
-            <img src={bag.image} alt="" />
-          </div>
-        ) : (
-          <ul className="bag">
-            {bag?.items.map(({ color = "#ffffff", name }, index) => {
-              return (
-                <li key={name + index} style={{ color }}>
-                  {name}
-                </li>
-              );
-            })}
-          </ul>
+      </header>
+      <div className="bag">{bag?.image && <img src={bag?.image} alt="" />}</div>
+      <section className="options options-left"></section>
+      <section className="options options-right">
+        <h1>opts</h1>
+        {modesOptions.map(({ label, checked, toggle }, index) => (
+          <Option
+            key={index}
+            label={label}
+            checked={checked}
+            onToggle={toggle}
+            enabled={index === 0 || displayColors}
+          />
         ))}
-      <footer>
+        <h1>guilds</h1>
+        {guildOptions.map(({ label, checked, toggle }, index) => (
+          <Option
+            key={index}
+            label={label}
+            checked={checked}
+            onToggle={toggle}
+            enabled={displayColors}
+          />
+        ))}
+      </section>
+      <div>
         <p>
-          {/*Custom colors: <span style={{ color: "cyan" }}>divine</span> items,{" "}
-          <span style={{ color: "crimson" }}>divine robes</span>.*/}
+          {displayColors && activeGuildsDescriptions.length > 0 && (
+            <span>
+              Special guild item:{" "}
+              {activeGuildsDescriptions.map(({ special, color }, index) => (
+                <span key={special + color}>
+                  {index > 0 && <span>, </span>}
+                  <span style={{ color }}>{special}</span>
+                </span>
+              ))}
+              .
+            </span>
+          )}
         </p>
-        <p>
-          <a href="https://github.com/bpierre/loot-rarity" target="_blank">
-            GitHub
-          </a>
-        </p>
-      </footer>
+      </div>
+      <aside>
+        <button onClick={() => setAbout((v) => !v)}>
+          {about ? "close" : "about"}
+        </button>
+        {about && (
+          <p>
+            This is a demo app for the{" "}
+            <a href="https://github.com/bpierre/loot-rarity" target="_blank">
+              Loot Rarity JS library
+            </a>
+            , which allows to represent the rarity levels of{" "}
+            <a href="https://www.lootproject.com/" target="_blank">
+              Loot
+            </a>{" "}
+            items.
+          </p>
+        )}
+      </aside>
+    </div>
+  );
+}
+
+function Option({
+  checked,
+  enabled,
+  label,
+  onToggle,
+}: {
+  checked: boolean;
+  enabled: boolean;
+  label: string;
+  onToggle: () => void;
+}) {
+  return (
+    <div style={{ opacity: enabled ? 1 : 0.5 }}>
+      <label>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={onToggle}
+          disabled={!enabled}
+        />
+        {label}
+      </label>
     </div>
   );
 }
