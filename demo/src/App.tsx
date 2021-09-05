@@ -164,7 +164,7 @@ function Option({
 }: {
   checked: boolean;
   enabled: boolean;
-  label: string;
+  label: ReactNode;
   onToggle: () => void;
 }) {
   return (
