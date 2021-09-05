@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import { useBag } from "./hooks";
 import guilds from "./guilds";
 
 type Option = {
-  label: string;
+  label: ReactNode;
   checked: boolean;
   toggle: () => void;
 };
@@ -27,7 +27,11 @@ function App() {
     () =>
       guilds.map((guild, index) => ({
         ...guild,
-        label: guild.emoji,
+        label: (
+          <span style={{ color: guild.color }}>
+            {guild.emoji} {guild.special}
+          </span>
+        ),
         checked: activeGuilds[index],
         toggle: () =>
           setActiveGuilds((activeGuilds) =>
@@ -164,7 +168,7 @@ function Option({
   onToggle: () => void;
 }) {
   return (
-    <div style={{ opacity: enabled ? 1 : 0.5 }}>
+    <div style={{ whiteSpace: "nowrap", opacity: enabled ? 1 : 0.5 }}>
       <label>
         <input
           type="checkbox"

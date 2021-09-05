@@ -9,7 +9,7 @@ html {
 body {
   position: relative;
   margin: 0;
-  font: 16px/1.5 serif;
+  font: 16px/1.5 'Source Serif Pro', serif;
   color: #ccc;
   background: #000;
   min-width: 720px;
@@ -62,7 +62,7 @@ header input[type="text"] {
   height: 30px;
   width: 55px;
   font-size: 20px;
-  font-family: serif;
+  font-family: inherit;
   text-align: center;
   color: #ccc;
   border: 0;

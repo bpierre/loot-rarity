@@ -15,6 +15,12 @@ export default [
     match: (name) => lc(name).includes("of the fox"),
   },
   {
+    emoji: "🐲",
+    special: "dragons",
+    color: "greenyellow",
+    match: (name) => lc(name).includes("dragon"),
+  },
+  {
     emoji: "👗",
     special: "divine robes",
     color: "cyan",
@@ -23,26 +29,26 @@ export default [
   {
     emoji: "✨",
     special: "divine items",
-    color: "royalblue",
+    color: "olivedrab",
     match: (name) => lc(name).includes("divine"),
-  },
-  {
-    emoji: "🐲",
-    special: "dragons",
-    color: "greenyellow",
-    match: (name) => lc(name).includes("dragon"),
   },
   {
     emoji: "🪖",
     special: "ancient helms",
-    color: "saddlebrown",
+    color: "peru",
     match: (name) => lc(name).includes("ancient helm"),
   },
   {
     emoji: "🗡",
     special: "katanas",
-    color: "crimson",
+    color: "red",
     match: (name) => lc(name).includes("katana"),
+  },
+  {
+    emoji: "📚",
+    special: "books",
+    color: "white",
+    match: (name) => /(?:book|tome|grimoire|chronicle)/i.test(name),
   },
   {
     emoji: "👑",
