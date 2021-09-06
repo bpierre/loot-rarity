@@ -205,11 +205,11 @@ document.body.innerHTML = `
 `;
 ```
 
-## Demo
+## Demo app
 
-Have a look at [the demo app](https://loot-rarity.vercel.app/) (code in [`demo/`](./demo/)) to see how it works.
+Have a look at [the demo app](https://loot-rarity.vercel.app/)  to see how it works.
 
-You can also run it from this repository:
+You can also run it from this repository (see [`demo/`](./demo/)):
 
 ```sh
 # Install pnpm if needed
