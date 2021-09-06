@@ -137,6 +137,21 @@ function App() {
             ))}
 
             <h1>guilds</h1>
+            <Option
+              label={<span>🌈 all</span>}
+              checked={colorDescriptions.length === guilds.length}
+              onToggle={() => {
+                const allChecked = colorDescriptions.length === guilds.length;
+                setActiveGuilds((activeGuilds) =>
+                  activeGuilds.map((_) => !allChecked)
+                );
+              }}
+              indeterminate={
+                colorDescriptions.length !== guilds.length &&
+                colorDescriptions.length > 0
+              }
+              enabled={displayColors}
+            />
             {guildOptions.map(({ label, checked, toggle }, index) => (
               <Option
                 key={index}

@@ -1,19 +1,30 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
+import { useEffect, useRef } from "react";
 
 import type { ReactNode } from "react";
 
 export function Option({
   checked,
   enabled,
+  indeterminate,
   label,
   onToggle,
 }: {
   checked: boolean;
   enabled: boolean;
+  indeterminate?: boolean;
   label: ReactNode;
   onToggle: () => void;
 }) {
+  const checkbox = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (indeterminate !== undefined && checkbox.current) {
+      checkbox.current.indeterminate = indeterminate;
+    }
+  }, [indeterminate]);
+
   return (
     <div
       css={css`
@@ -33,6 +44,7 @@ export function Option({
     >
       <label>
         <input
+          ref={checkbox}
           type="checkbox"
           checked={checked}
           onChange={onToggle}
