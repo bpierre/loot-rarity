@@ -41,7 +41,7 @@ export default [
   {
     emoji: "🗡",
     special: "katanas",
-    color: "red",
+    color: "crimson",
     match: (name) => lc(name).includes("katana"),
   },
   {

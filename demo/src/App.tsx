@@ -1,16 +1,21 @@
-import React, { ReactNode, useMemo, useState } from "react";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
+import { Fragment, useMemo, useState } from "react";
+import { randomBagId } from "./utils";
 import { useBag } from "./hooks";
+import { AppLayout } from "./AppLayout";
+import { ColorsSummary } from "./ColorsSummary";
+import { GlobalStyles } from "./GlobalStyles";
+import { Option } from "./Option";
 import guilds from "./guilds";
+
+import type { ReactNode } from "react";
 
 type Option = {
   label: ReactNode;
   checked: boolean;
   toggle: () => void;
 };
-
-function randomBagId() {
-  return String(Math.floor(Math.random() * 7999) + 1);
-}
 
 function App() {
   const [bagId, setBagId] = useState(randomBagId());
@@ -19,7 +24,6 @@ function App() {
     Object.keys(guilds).map(() => false)
   );
 
-  const [about, setAbout] = useState(false);
   const [displayColors, setDisplayColors] = useState(true);
   const [displayLevels, setDisplayLevels] = useState(false);
 
@@ -46,7 +50,7 @@ function App() {
   const modesOptions = useMemo<Option[]>(
     () => [
       {
-        label: "on",
+        label: "colors",
         checked: displayColors,
         toggle: () => setDisplayColors((v) => !v),
       },
@@ -65,120 +69,84 @@ function App() {
     { displayColors, displayLevels }
   );
 
-  const activeGuildsDescriptions = guilds.filter(
-    (_, index) => activeGuilds[index]
-  );
+  const colorDescriptions = displayColors
+    ? guilds.filter((_, index) => activeGuilds[index])
+    : [];
 
   return (
-    <div className="app">
-      <header>
-        <h1>Loot Rarity</h1>
-        <h2>
-          <label htmlFor="bag-input">Bag #</label>
-          <input
-            id="bag-input"
-            type="text"
-            value={bagId ?? ""}
-            onChange={(event) => {
-              const value = event.currentTarget.value.trim();
-              if (value === "") {
-                setBagId("");
-                return;
+    <Fragment>
+      <GlobalStyles />
+      <AppLayout
+        title="Loot Rarity"
+        secondary={
+          <div
+            css={css`
+              input[type="text"] {
+                height: 30px;
+                width: 55px;
+                font-size: 20px;
+                font-family: inherit;
+                text-align: center;
+                color: #ccc;
+                border: 0;
+                background: transparent;
+                margin-right: 20px;
+                margin-left: 4px;
               }
-              const numId = Number(value);
-              if (!isNaN(numId) && numId > 0 && numId <= 8000) {
-                setBagId(value);
+              input[type="text"]:focus {
+                outline: 2px solid #ccc;
               }
-            }}
-          />
-          <button onClick={() => setBagId(randomBagId())}>random</button>
-        </h2>
-      </header>
-      <div className="bag">{bag?.image && <img src={bag?.image} alt="" />}</div>
-      <section className="options options-left"></section>
-      <section className="options options-right">
-        <h1>opts</h1>
-        {modesOptions.map(({ label, checked, toggle }, index) => (
-          <Option
-            key={index}
-            label={label}
-            checked={checked}
-            onToggle={toggle}
-            enabled={index === 0 || displayColors}
-          />
-        ))}
-        <h1>guilds</h1>
-        {guildOptions.map(({ label, checked, toggle }, index) => (
-          <Option
-            key={index}
-            label={label}
-            checked={checked}
-            onToggle={toggle}
-            enabled={displayColors}
-          />
-        ))}
-      </section>
-      <div>
-        <p>
-          {displayColors && activeGuildsDescriptions.length > 0 && (
-            <span>
-              Special guild item:{" "}
-              {activeGuildsDescriptions.map(({ special, color }, index) => (
-                <span key={special + color}>
-                  {index > 0 && <span>, </span>}
-                  <span style={{ color }}>{special}</span>
-                </span>
-              ))}
-              .
-            </span>
-          )}
-        </p>
-      </div>
-      <aside>
-        <button onClick={() => setAbout((v) => !v)}>
-          {about ? "close" : "about"}
-        </button>
-        {about && (
-          <p>
-            This is a demo app for the{" "}
-            <a href="https://github.com/bpierre/loot-rarity" target="_blank">
-              Loot Rarity JS library
-            </a>
-            , which allows to represent the rarity levels of{" "}
-            <a href="https://www.lootproject.com/" target="_blank">
-              Loot
-            </a>{" "}
-            items.
-          </p>
-        )}
-      </aside>
-    </div>
-  );
-}
+            `}
+          >
+            <label htmlFor="bag-input">Bag #</label>
+            <input
+              id="bag-input"
+              type="text"
+              value={bagId ?? ""}
+              onChange={(event) => {
+                const value = event.currentTarget.value.trim();
+                if (value === "") {
+                  setBagId("");
+                  return;
+                }
+                const numId = Number(value);
+                if (!isNaN(numId) && numId > 0 && numId <= 8000) {
+                  setBagId(value);
+                }
+              }}
+            />
+            <button onClick={() => setBagId(randomBagId())}>random</button>
+          </div>
+        }
+        lootImage={bag?.image && <img src={bag?.image} alt="" />}
+        options={
+          <Fragment>
+            <h1>options</h1>
+            {modesOptions.map(({ label, checked, toggle }, index) => (
+              <Option
+                key={index}
+                label={label}
+                checked={checked}
+                onToggle={toggle}
+                enabled={index === 0 || displayColors}
+              />
+            ))}
 
-function Option({
-  checked,
-  enabled,
-  label,
-  onToggle,
-}: {
-  checked: boolean;
-  enabled: boolean;
-  label: ReactNode;
-  onToggle: () => void;
-}) {
-  return (
-    <div style={{ whiteSpace: "nowrap", opacity: enabled ? 1 : 0.5 }}>
-      <label>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={onToggle}
-          disabled={!enabled}
-        />
-        {label}
-      </label>
-    </div>
+            <h1>guilds</h1>
+            {guildOptions.map(({ label, checked, toggle }, index) => (
+              <Option
+                key={index}
+                label={label}
+                checked={checked}
+                onToggle={toggle}
+                enabled={displayColors}
+              />
+            ))}
+          </Fragment>
+        }
+        footer={<ColorsSummary colorDescriptions={colorDescriptions} />}
+      />
+    </Fragment>
   );
 }
 
