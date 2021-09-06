@@ -81,6 +81,8 @@ function App() {
         secondary={
           <div
             css={css`
+              display: flex;
+              align-items: center;
               input[type="text"] {
                 height: 30px;
                 width: 55px;
@@ -92,9 +94,11 @@ function App() {
                 background: transparent;
                 margin-right: 20px;
                 margin-left: 4px;
+                border: 2px solid #888;
               }
               input[type="text"]:focus {
-                outline: 2px solid #ccc;
+                border-color: #fff;
+                outline: 0;
               }
             `}
           >

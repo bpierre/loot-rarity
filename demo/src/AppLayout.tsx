@@ -31,6 +31,7 @@ export function AppLayout({
         justify-content: center;
       `}
     >
+      <About />
       <header
         css={css`
           display: flex;
@@ -96,7 +97,6 @@ export function AppLayout({
         {options}
       </section>
       {footer}
-      <About />
     </div>
   );
 }

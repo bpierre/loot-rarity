@@ -10,33 +10,53 @@ export function About() {
         position: fixed;
         top: 10px;
         right: 10px;
-        button {
-          appearance: none;
+      `}
+    >
+      <div
+        css={css`
           position: absolute;
           top: 0;
           right: 0;
-          width: 55px;
-        }
-        p {
-          width: 400px;
-          margin: 15px;
-          padding: 20px;
-          color: #fff;
-          background: #000;
-          border: 2px solid #fff;
-        }
-      `}
-    >
-      <button onClick={() => setAbout((v) => !v)}>
-        {about ? "close" : "about"}
-      </button>
+          display: flex;
+          gap: 10px;
+        `}
+      >
+        {!about && (
+          <a
+            href="https://github.com/bpierre/loot-rarity"
+            target="_blank"
+            className="button"
+          >
+            GitHub ⭐️
+          </a>
+        )}
+        <button
+          onClick={() => setAbout((v) => !v)}
+          css={css`
+            appearance: none;
+            width: 55px;
+          `}
+        >
+          {about ? "Close" : "About"}
+        </button>
+      </div>
       {about && (
-        <p>
-          This is a demo app for{" "}
+        <p
+          css={css`
+            width: 300px;
+            margin: 15px;
+            padding: 20px;
+            color: #fff;
+            background: #000;
+            border: 2px solid #fff;
+          `}
+        >
+          This is a demo for{" "}
           <a href="https://github.com/bpierre/loot-rarity" target="_blank">
             Loot Rarity
           </a>
-          , a library which allows to represent the rarity levels of{" "}
+          , a JavaScript library for Node and browsers which allows to represent
+          the rarity levels of{" "}
           <a href="https://www.lootproject.com/" target="_blank">
             Loot
           </a>{" "}
