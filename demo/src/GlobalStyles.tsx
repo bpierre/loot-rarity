@@ -1,7 +1,23 @@
 /** @jsx jsx */
 import { Global, css, jsx } from "@emotion/react";
+import { useEffect } from "react";
 
 export function GlobalStyles() {
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+
+    const start = () => {
+      const link = document.querySelector("link[rel=icon]") as HTMLLinkElement;
+      const id = link?.href?.match(/-([1-6]).svg/)?.[1];
+      if (id) {
+        link.href = `/favicon-${(parseInt(id, 10) % 6) + 1}.svg`;
+      }
+      timer = setTimeout(start, 1000);
+    };
+    start();
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <Global
       styles={css`
@@ -30,7 +46,7 @@ export function GlobalStyles() {
           align-items: center;
           justify-content: center;
           height: 30px;
-          padding: 0 6px;
+          padding: 1px 6px 0;
           font: inherit;
           font-size: 15px;
           text-transform: lowercase;
