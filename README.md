@@ -137,9 +137,18 @@ function Loot({ tokenId }) {
 
 The resulting images could look like this:
 
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/131557225-f3a3c22d-c9f9-4f66-ab21-4adb2971c979.png">
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/131558000-ea575347-71ff-4200-8857-aa9d79c88536.png">
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/131557222-785d5ba6-9535-440d-9e66-0c6a695c979e.png">
+#### Default
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/132145773-a1c06266-1ebf-46e8-86c0-9829dfd1eb53.png">
+
+#### Rarity levels displayed
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/132145770-1af61d9a-1d88-4b65-9a8f-a4a4ede74d82.png">
+
+#### Custom colors
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/132145772-0160feb9-94f1-4b80-bade-6e7509187785.png">
+
+
 
 ### rarityImageFromItems()
 
@@ -185,7 +194,7 @@ document.body.innerHTML = `
 
 ## Demo
 
-Have a look at [the demo app](https://5e0cs.csb.app/) on CodeSandbox to see how it works.
+Have a look at [the demo app](https://loot-rarity.vercel.app/) (code in [`demo/`](./demo/)) to see how it works.
 
 You can also run it from this repository:
 
