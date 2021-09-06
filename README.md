@@ -5,15 +5,15 @@ Rarity levels for [Loot](https://lootproject.com).
 ## How are the rarity levels determined?
 
 The rarity level of any given item is deducted from its number of occurrences in the total number of Loot items.
- 
-| Rarity level                                                                                                                             | Description                                        | Occurrences           |
+
+| Rarity level                                                                                                                             | Description                                        |           Occurrences |
 | ---------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------- | --------------------: |
 | <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379065-5eef7b05-458c-4717-bfa8-c2d086283f0b.png"> Level 1 | **Common** items appear **375** or more times.     | 47.25% - 30,237 items |
-| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379064-442c9a9e-90c9-4cb9-8fac-1ed0dbed5609.png"> Level 2 | **Uncommon** items appear less than **375** times. | 12.61% - 8,073 items  |
-| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379063-1b6fa149-945f-467a-893e-e90eab48c20c.png"> Level 3 | **Rare** items appear less than **358** times.     | 11.78% - 7,537 items  |
-| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379062-4847e475-8250-4e17-bec1-71c586b4e419.png"> Level 4 | **Epic** items appear less than **101** times.     | 10.29% - 6,587 items  |
-| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379061-acead0af-797b-47f9-9d71-db8c7d6b1696.png"> Level 5 | **Legendary** items appear less than **10** times. | 9.67% - 6,189 items   |
-| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379060-7fa91e93-dbc2-4a55-8d0c-125bc43e16e1.png"> Level 6 | **Mythic** items appear exactly **1** time.        | 8.4% - 5,377 items    |
+| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379064-442c9a9e-90c9-4cb9-8fac-1ed0dbed5609.png"> Level 2 | **Uncommon** items appear less than **375** times. |  12.61% - 8,073 items |
+| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379063-1b6fa149-945f-467a-893e-e90eab48c20c.png"> Level 3 | **Rare** items appear less than **358** times.     |  11.78% - 7,537 items |
+| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379062-4847e475-8250-4e17-bec1-71c586b4e419.png"> Level 4 | **Epic** items appear less than **101** times.     |  10.29% - 6,587 items |
+| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379061-acead0af-797b-47f9-9d71-db8c7d6b1696.png"> Level 5 | **Legendary** items appear less than **10** times. |   9.67% - 6,189 items |
+| <img width="10" alt="" src="https://user-images.githubusercontent.com/36158/131379060-7fa91e93-dbc2-4a55-8d0c-125bc43e16e1.png"> Level 6 | **Mythic** items appear exactly **1** time.        |    8.4% - 5,377 items |
 
 ## Installation
 
@@ -139,16 +139,29 @@ The resulting images could look like this:
 
 #### Default
 
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/132145773-a1c06266-1ebf-46e8-86c0-9829dfd1eb53.png">
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/132146191-3a0c6426-b33e-4a22-a1d8-3620d993e1e7.png">
 
-#### Rarity levels displayed
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/132145770-1af61d9a-1d88-4b65-9a8f-a4a4ede74d82.png">
+```js
+let image = await rarityImage(image);
+```
 
-#### Custom colors
+#### With the rarity levels displayed
 
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/132145772-0160feb9-94f1-4b80-bade-6e7509187785.png">
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/132146189-52b0b1cd-0509-4ebc-a7f9-2a0a9b0ea16e.png">
 
+```js
+let rarified = await rarityImage(image, { displayLevels: true });
+```
 
+#### With custom colors
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/132146190-9ce0f17a-364e-4ca0-b1a9-9326eb5f2cca.png">
+
+```js
+let rarified = await rarityImage(image, {
+  colorFn: ({ itemName }) => itemName?.includes("Slippers") && "cyan",
+});
+```
 
 ### rarityImageFromItems()
 
