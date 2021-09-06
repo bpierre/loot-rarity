@@ -139,29 +139,29 @@ The resulting images could look like this:
 
 #### Default
 
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/132146191-3a0c6426-b33e-4a22-a1d8-3620d993e1e7.png">
-
 ```js
 let image = await rarityImage(image);
 ```
 
-#### With the rarity levels displayed
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images." src="https://user-images.githubusercontent.com/36158/132146191-3a0c6426-b33e-4a22-a1d8-3620d993e1e7.png">
 
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/132146189-52b0b1cd-0509-4ebc-a7f9-2a0a9b0ea16e.png">
+#### With the rarity levels displayed
 
 ```js
 let rarified = await rarityImage(image, { displayLevels: true });
 ```
 
-#### With custom colors
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/132146189-52b0b1cd-0509-4ebc-a7f9-2a0a9b0ea16e.png">
 
-<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/132146190-9ce0f17a-364e-4ca0-b1a9-9326eb5f2cca.png">
+#### With custom colors
 
 ```js
 let rarified = await rarityImage(image, {
   colorFn: ({ itemName }) => itemName?.includes("Slippers") && "cyan",
 });
 ```
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/132146190-9ce0f17a-364e-4ca0-b1a9-9326eb5f2cca.png">
 
 ### rarityImageFromItems()
 
