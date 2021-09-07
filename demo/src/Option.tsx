@@ -6,12 +6,14 @@ import type { ReactNode } from "react";
 
 export function Option({
   checked,
+  checkedColor = "inherit",
   enabled,
   indeterminate,
   label,
   onToggle,
 }: {
   checked: boolean;
+  checkedColor?: string;
   enabled: boolean;
   indeterminate?: boolean;
   label: ReactNode;
@@ -35,6 +37,7 @@ export function Option({
           align-items: center;
           margin: 5px 0;
           cursor: pointer;
+          color: ${checked ? checkedColor : "inherit"};
         }
         input {
           margin-right: 8px;

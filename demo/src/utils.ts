@@ -1,3 +1,3 @@
-export function randomBagId(max = 8000) {
-  return String(Math.floor(Math.random() * max) + 1);
+export function randomInt(max: number) {
+  return Math.floor(Math.random() * max);
 }

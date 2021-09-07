@@ -1,23 +1,35 @@
 /** @jsx jsx */
 import { Global, css, jsx } from "@emotion/react";
 import { useEffect } from "react";
+import diamonds from './diamonds'
+
+function createLink() {
+  const link = document.head.appendChild(document.createElement("link"));
+  link.rel = "icon";
+  link.type = "image/svg";
+  link.href = diamonds[0];
+  return link;
+}
 
 export function GlobalStyles() {
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
+    let diamondIndex = 0;
+    const link = createLink();
 
-    const start = () => {
-      const link = document.querySelector("link[rel=icon]") as HTMLLinkElement;
-      const id = link?.href?.match(/-([1-6]).svg/)?.[1];
-      if (id) {
-        link.href = `/favicon-${(parseInt(id, 10) % 6) + 1}.svg`;
-      }
-      timer = setTimeout(start, 1000);
+    const update = () => {
+      link.href = diamonds[diamondIndex];
+      diamondIndex = (diamondIndex + 1) % 6;
+      timer = setTimeout(update, 500);
     };
-    start();
+    update();
 
-    return () => clearTimeout(timer);
+    return () => {
+      link.remove();
+      clearTimeout(timer);
+    };
   }, []);
+
   return (
     <Global
       styles={css`

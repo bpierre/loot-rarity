@@ -4,9 +4,9 @@ import { Fragment, useMemo, useState } from "react";
 import { randomBagId } from "./utils";
 import { useBag } from "./hooks";
 import { AppLayout } from "./AppLayout";
-import { ColorsSummary } from "./ColorsSummary";
 import { GlobalStyles } from "./GlobalStyles";
 import { Option } from "./Option";
+import { Levels } from "./Levels";
 import guilds from "./guilds";
 
 import type { ReactNode } from "react";
@@ -18,8 +18,6 @@ type Option = {
 };
 
 function App() {
-  const [bagId, setBagId] = useState(randomBagId());
-
   const [activeGuilds, setActiveGuilds] = useState<boolean[]>(
     Object.keys(guilds).map(() => false)
   );
@@ -31,11 +29,7 @@ function App() {
     () =>
       guilds.map((guild, index) => ({
         ...guild,
-        label: (
-          <span style={{ color: guild.color }}>
-            {guild.emoji} {guild.special}
-          </span>
-        ),
+        label: `${guild.emoji} ${guild.special}`,
         checked: activeGuilds[index],
         toggle: () =>
           setActiveGuilds((activeGuilds) =>
@@ -63,15 +57,14 @@ function App() {
     [displayLevels, displayColors]
   );
 
-  const bag = useBag(
-    bagId,
+  const [bag, updateBag] = useBag(
     [...guilds].filter((_, index) => activeGuilds[index]),
     { displayColors, displayLevels }
   );
 
-  const colorDescriptions = displayColors
-    ? guilds.filter((_, index) => activeGuilds[index])
-    : [];
+  const activeGuildsCount = [...guilds].filter(
+    (_, index) => activeGuilds[index]
+  ).length;
 
   return (
     <Fragment>
@@ -85,7 +78,8 @@ function App() {
               align-items: center;
               input[type="text"] {
                 height: 30px;
-                width: 55px;
+                width: 60px;
+                padding: 0 4px;
                 font-size: 20px;
                 font-family: inherit;
                 text-align: center;
@@ -93,39 +87,46 @@ function App() {
                 border: 0;
                 background: transparent;
                 margin-right: 20px;
-                margin-left: 4px;
                 border: 2px solid #888;
               }
               input[type="text"]:focus {
                 border-color: #fff;
                 outline: 0;
               }
+              label {
+                display: flex;
+                align-items: center;
+                height: 30px;
+                padding: 0 4px;
+                border: 2px solid #888;
+                border-right: 0;
+              }
             `}
           >
-            <label htmlFor="bag-input">Bag #</label>
+            <label htmlFor="bag-input">#</label>
             <input
               id="bag-input"
               type="text"
-              value={bagId ?? ""}
+              value={bag?.id ?? ""}
               onChange={(event) => {
                 const value = event.currentTarget.value.trim();
                 if (value === "") {
-                  setBagId("");
+                  updateBag("");
                   return;
                 }
                 const numId = Number(value);
                 if (!isNaN(numId) && numId > 0 && numId <= 8000) {
-                  setBagId(value);
+                  updateBag(value);
                 }
               }}
             />
-            <button onClick={() => setBagId(randomBagId())}>random</button>
+            <button onClick={() => updateBag(true, guilds)}>random</button>
           </div>
         }
         lootImage={bag?.image && <img src={bag?.image} alt="" />}
         options={
           <Fragment>
-            <h1>options</h1>
+            <h1>Options</h1>
             {modesOptions.map(({ label, checked, toggle }, index) => (
               <Option
                 key={index}
@@ -136,34 +137,34 @@ function App() {
               />
             ))}
 
-            <h1>guilds</h1>
+            <h1>Guilds</h1>
             <Option
               label={<span>🌈 all</span>}
-              checked={colorDescriptions.length === guilds.length}
+              checked={activeGuildsCount === guilds.length}
               onToggle={() => {
-                const allChecked = colorDescriptions.length === guilds.length;
+                const allChecked = activeGuildsCount === guilds.length;
                 setActiveGuilds((activeGuilds) =>
                   activeGuilds.map((_) => !allChecked)
                 );
               }}
               indeterminate={
-                colorDescriptions.length !== guilds.length &&
-                colorDescriptions.length > 0
+                activeGuildsCount > 0 && activeGuildsCount < guilds.length
               }
               enabled={displayColors}
             />
             {guildOptions.map(({ label, checked, toggle }, index) => (
               <Option
                 key={index}
-                label={label}
                 checked={checked}
-                onToggle={toggle}
+                checkedColor="cyan"
                 enabled={displayColors}
+                label={label}
+                onToggle={toggle}
               />
             ))}
           </Fragment>
         }
-        footer={<ColorsSummary colorDescriptions={colorDescriptions} />}
+        footer={<Levels />}
       />
     </Fragment>
   );

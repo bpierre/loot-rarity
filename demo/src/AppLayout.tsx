@@ -26,7 +26,7 @@ export function AppLayout({
         display: flex;
         flex-direction: column;
         width: 450px;
-        padding: 80px 0;
+        padding: 80px 0 40px;
         margin: 0 auto;
         justify-content: center;
       `}
