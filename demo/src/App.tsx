@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import { Fragment, useMemo, useState } from "react";
-import { randomBagId } from "./utils";
 import { useBag } from "./hooks";
 import { AppLayout } from "./AppLayout";
 import { GlobalStyles } from "./GlobalStyles";
@@ -120,7 +119,7 @@ function App() {
                 }
               }}
             />
-            <button onClick={() => updateBag(true, guilds)}>random</button>
+            <button onClick={() => updateBag(true)}>random</button>
           </div>
         }
         lootImage={bag?.image && <img src={bag?.image} alt="" />}
