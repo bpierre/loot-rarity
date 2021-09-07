@@ -27,7 +27,16 @@ export function About() {
             target="_blank"
             className="button"
           >
-            GitHub ⭐️
+            GitHub{" "}
+            <span
+              css={css`
+                display: flex;
+                margin-left: 4px;
+                font-size: 12px;
+              `}
+            >
+              ⭐️
+            </span>
           </a>
         )}
         <button
