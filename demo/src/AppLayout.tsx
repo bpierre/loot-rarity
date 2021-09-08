@@ -5,19 +5,21 @@ import { About } from "./About";
 import type { ReactNode } from "react";
 
 export type AppLayoutProps = {
-  title: ReactNode;
-  secondary: ReactNode;
-  lootImage: ReactNode;
-  options: ReactNode;
   footer: ReactNode;
+  lootImage: ReactNode;
+  lootImageBorderColor?: string;
+  options: ReactNode;
+  secondary: ReactNode;
+  title: ReactNode;
 };
 
 export function AppLayout({
-  title,
-  secondary,
-  lootImage,
-  options,
   footer,
+  lootImage,
+  lootImageBorderColor = "#ccc",
+  options,
+  secondary,
+  title,
 }: AppLayoutProps) {
   return (
     <div
@@ -66,7 +68,7 @@ export function AppLayout({
           height: 450px;
           padding: 0;
           margin: 0;
-          border: 2px solid #ccc;
+          border: 2px solid ${lootImageBorderColor};
           img {
             width: 100%;
             height: 100%;

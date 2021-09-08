@@ -1,6 +1,6 @@
 import { hashItem } from "../src/hash-item";
 import occurences from "../data/occurences.json";
-import { levelFromOccurences } from "./utils";
+import { itemLevelFromOccurences } from "./utils";
 
 type Occurences = Record<string, number>;
 
@@ -17,7 +17,7 @@ async function main() {
 
   const byLevel = hashedItems.reduce(
     (byLevel: string[], [hash, occurences]) => {
-      const level = levelFromOccurences(Number(occurences));
+      const level = itemLevelFromOccurences(Number(occurences));
 
       // No need to store common items, unknown items are always common
       if (level === 1) {

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import { Fragment, useMemo, useState } from "react";
+import { rarityColor } from "../..";
 import { useBag } from "./hooks";
 import { AppLayout } from "./AppLayout";
 import { GlobalStyles } from "./GlobalStyles";
@@ -22,7 +23,8 @@ function App() {
   );
 
   const [displayColors, setDisplayColors] = useState(true);
-  const [displayLevels, setDisplayLevels] = useState(false);
+  const [displayItemLevels, setDisplayItemLevels] = useState(false);
+  const [displayLootLevel, setDisplayLootLevel] = useState(false);
 
   const guildOptions = useMemo<Option[]>(
     () =>
@@ -48,17 +50,24 @@ function App() {
         toggle: () => setDisplayColors((v) => !v),
       },
       {
-        label: "labels",
-        checked: displayLevels,
-        toggle: () => setDisplayLevels((v) => !v),
+        label: "loot level",
+        checked: displayLootLevel,
+        toggle: () => {
+          setDisplayLootLevel((v) => !v);
+        },
+      },
+      {
+        label: "item levels",
+        checked: displayItemLevels,
+        toggle: () => setDisplayItemLevels((v) => !v),
       },
     ],
-    [displayLevels, displayColors]
+    [displayColors, displayItemLevels, displayLootLevel]
   );
 
   const [bag, updateBag] = useBag(
     [...guilds].filter((_, index) => activeGuilds[index]),
-    { displayColors, displayLevels }
+    { displayColors, displayItemLevels, displayLootLevel }
   );
 
   const activeGuildsCount = [...guilds].filter(
@@ -123,6 +132,9 @@ function App() {
           </div>
         }
         lootImage={bag?.image && <img src={bag?.image} alt="" />}
+        lootImageBorderColor={
+          bag && displayLootLevel ? rarityColor(bag.lootRarity) : undefined
+        }
         options={
           <Fragment>
             <h1>Options</h1>
