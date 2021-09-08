@@ -55,6 +55,33 @@ let rarity = itemRarity('"Golem Roar" Studded Leather Belt of Fury');
 console.log(rarity); // 6
 ```
 
+### lootRarity()
+
+```ts
+function lootRarity(items: string): RarityLevel;
+```
+
+This function returns the rarity level of a Loot from the 8 items it contains.
+
+Example:
+
+```js
+let items = [
+  "Warhammer of the Fox",
+  "Studded Leather Armor",
+  "Demon Crown",
+  "Sash",
+  "Studded Leather Boots of Power",
+  "Silk Gloves",
+  "Necklace of Power",
+  "Silver Ring",
+];
+
+let rarity = lootRarity(items);
+
+console.log(rarity); // 3
+```
+
 ### rarityColor()
 
 ```ts
@@ -207,7 +234,7 @@ document.body.innerHTML = `
 
 ## Demo app
 
-Have a look at [the demo app](https://loot-rarity.vercel.app/)  to see how it works.
+Have a look at [the demo app](https://loot-rarity.vercel.app/) to see how it works.
 
 You can also run it from this repository (see [`demo/`](./demo/)):
 
