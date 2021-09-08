@@ -126,7 +126,8 @@ function rarityImage(
   imageOrItems: string | string[],
   options?: {
     colorFn?: ColorFn;
-    displayLevels?: Boolean;
+    displayItemLevels?: Boolean;
+    displayLootLevel?: Boolean;
     imageFormat: "data-uri" | "svg";
   }
 ): Promise<string>;
@@ -145,7 +146,8 @@ It accepts any of the following:
 Options:
 
 - `colorFn` allows to override the color of a particular item.
-- `displayLevels` allows to add levels to the items list.
+- `displayItemLevels` allows to add levels to the items list.
+- `displayLootLevel` allows to display the Loot level badge.
 - `imageFormat` controls the output: data URI (`"data-uri"`) (default) or SVG source (`"svg"`).
 
 Example with React, [use-nft](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
@@ -175,7 +177,7 @@ let image = await rarityImage(image);
 #### With the rarity levels displayed
 
 ```js
-let rarified = await rarityImage(image, { displayLevels: true });
+let rarified = await rarityImage(image, { displayItemLevels: true });
 ```
 
 <img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/132146189-52b0b1cd-0509-4ebc-a7f9-2a0a9b0ea16e.png">
@@ -197,7 +199,8 @@ function rarityImageFromItems(
   items: string[],
   options: {
     colorFn?: ColorFn;
-    displayLevels?: Boolean;
+    displayItemLevels?: Boolean;
+    displayLootLevel?: Boolean;
     imageFormat: "data-uri" | "svg";
   }
 ): string;
@@ -208,7 +211,8 @@ This function is similar to rarityImage, except it only accepts an array of item
 Options:
 
 - `colorFn` allows to override the color of a particular item.
-- `displayLevels` allows to add levels to the items list.
+- `displayItemLevels` allows to add levels to the items list.
+- `displayLootLevel` allows to display the Loot level badge.
 - `imageFormat` controls the output: data URI (`"data-uri"`) (default) or SVG source (`"svg"`).
 
 Example:
