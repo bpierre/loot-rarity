@@ -55,6 +55,33 @@ let rarity = itemRarity('"Golem Roar" Studded Leather Belt of Fury');
 console.log(rarity); // 6
 ```
 
+### lootRarity()
+
+```ts
+function lootRarity(items: string): RarityLevel;
+```
+
+This function returns the rarity level of a Loot from the 8 items it contains.
+
+Example:
+
+```js
+let items = [
+  "Warhammer of the Fox",
+  "Studded Leather Armor",
+  "Demon Crown",
+  "Sash",
+  "Studded Leather Boots of Power",
+  "Silk Gloves",
+  "Necklace of Power",
+  "Silver Ring",
+];
+
+let rarity = lootRarity(items);
+
+console.log(rarity); // 3
+```
+
 ### rarityColor()
 
 ```ts
@@ -99,7 +126,8 @@ function rarityImage(
   imageOrItems: string | string[],
   options?: {
     colorFn?: ColorFn;
-    displayLevels?: Boolean;
+    displayItemLevels?: Boolean;
+    displayLootLevel?: Boolean;
     imageFormat: "data-uri" | "svg";
   }
 ): Promise<string>;
@@ -118,7 +146,8 @@ It accepts any of the following:
 Options:
 
 - `colorFn` allows to override the color of a particular item.
-- `displayLevels` allows to add levels to the items list.
+- `displayItemLevels` allows to add levels to the items list.
+- `displayLootLevel` allows to display the Loot level badge.
 - `imageFormat` controls the output: data URI (`"data-uri"`) (default) or SVG source (`"svg"`).
 
 Example with React, [use-nft](https://github.com/spectrexyz/use-nft) to load the image, and [swr](https://github.com/vercel/swr) to handle the async function:
@@ -148,7 +177,7 @@ let image = await rarityImage(image);
 #### With the rarity levels displayed
 
 ```js
-let rarified = await rarityImage(image, { displayLevels: true });
+let rarified = await rarityImage(image, { displayItemLevels: true });
 ```
 
 <img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the rarity levels added." src="https://user-images.githubusercontent.com/36158/132146189-52b0b1cd-0509-4ebc-a7f9-2a0a9b0ea16e.png">
@@ -163,6 +192,14 @@ let rarified = await rarityImage(image, {
 
 <img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/132146190-9ce0f17a-364e-4ca0-b1a9-9326eb5f2cca.png">
 
+#### With the Loot level
+
+```js
+let rarified = await rarityImage(image, { displayLootLevel: true });
+```
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the Loot level badge." src="https://user-images.githubusercontent.com/36158/132579918-9005d51a-d702-4e08-9c66-01db5e2004d6.png">
+
 ### rarityImageFromItems()
 
 ```ts
@@ -170,7 +207,8 @@ function rarityImageFromItems(
   items: string[],
   options: {
     colorFn?: ColorFn;
-    displayLevels?: Boolean;
+    displayItemLevels?: Boolean;
+    displayLootLevel?: Boolean;
     imageFormat: "data-uri" | "svg";
   }
 ): string;
@@ -181,7 +219,8 @@ This function is similar to rarityImage, except it only accepts an array of item
 Options:
 
 - `colorFn` allows to override the color of a particular item.
-- `displayLevels` allows to add levels to the items list.
+- `displayItemLevels` allows to add levels to the items list.
+- `displayLootLevel` allows to display the Loot level badge.
 - `imageFormat` controls the output: data URI (`"data-uri"`) (default) or SVG source (`"svg"`).
 
 Example:
@@ -207,7 +246,7 @@ document.body.innerHTML = `
 
 ## Demo app
 
-Have a look at [the demo app](https://loot-rarity.vercel.app/)  to see how it works.
+Have a look at [the demo app](https://loot-rarity.vercel.app/) to see how it works.
 
 You can also run it from this repository (see [`demo/`](./demo/)):
 

@@ -24,6 +24,17 @@ export function itemRarity(itemName: string): RarityLevel {
   return 1;
 }
 
+export function lootRarity(items: string[]): RarityLevel {
+  const total = items.reduce((total, name) => total + itemRarity(name), 0);
+  let index = rarityLevels.length;
+  while (index--) {
+    if (total >= rarityLevels[index][1]) {
+      return (index + 1) as RarityLevel;
+    }
+  }
+  return 1;
+}
+
 export function rarityColor(
   itemOrRarity: string | RarityLevel,
   { colorFn }: { colorFn?: ColorFn } = {}
@@ -31,7 +42,7 @@ export function rarityColor(
   const itemName = typeof itemOrRarity === "string" ? itemOrRarity : null;
   const level = itemName ? itemRarity(itemName) : (itemOrRarity as RarityLevel);
 
-  const color = rarityLevels[level - 1][1];
+  const color = rarityLevels[level - 1][2];
   if (!color) {
     throw new Error(`Incorrect rarity level or item: ${itemOrRarity}`);
   }
@@ -42,7 +53,7 @@ export function rarityDescription(itemOrRarity: string | RarityLevel): string {
   const rarity =
     typeof itemOrRarity === "number" ? itemOrRarity : itemRarity(itemOrRarity);
 
-  const description = rarityLevels[rarity - 1][2];
+  const description = rarityLevels[rarity - 1][3];
   if (!description) {
     throw new Error(`Incorrect rarity passed: ${itemOrRarity}`);
   }

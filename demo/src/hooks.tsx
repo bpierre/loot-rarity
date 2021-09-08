@@ -1,7 +1,8 @@
+import type { RarityLevel } from "../..";
 import type { Guild } from "./guilds";
 
 import { useState } from "react";
-import { rarityImageFromItems } from "../..";
+import { lootRarity, rarityImageFromItems } from "../..";
 import loot from "../../data/loot.json";
 import { randomInt } from "./utils";
 
@@ -36,9 +37,17 @@ export function useBag(
   guilds: Guild[],
   {
     displayColors,
-    displayLevels,
-  }: { displayColors: boolean; displayLevels: boolean }
-): [null | { id: string; image: string }, (id: string | true) => void] {
+    displayItemLevels,
+    displayLootLevel,
+  }: {
+    displayColors: boolean;
+    displayItemLevels: boolean;
+    displayLootLevel: boolean;
+  }
+): [
+  null | { id: string; image: string; lootRarity: RarityLevel },
+  (id: string | true) => void
+] {
   const [bagId, setBagId] = useState(String(randomInt(8000)));
   const _bagId = parseInt(bagId, 10);
 
@@ -54,10 +63,14 @@ export function useBag(
     return [null, updateBag];
   }
 
+  const items = bags[_bagId - 1].items;
+
   const bag = {
     id: bagId,
-    image: rarityImageFromItems(bags[_bagId - 1].items, {
-      displayLevels: displayLevels && displayColors,
+    lootRarity: lootRarity(items),
+    image: rarityImageFromItems(items, {
+      displayItemLevels: displayItemLevels && displayColors,
+      displayLootLevel: displayLootLevel && displayColors,
       colorFn({ itemName }) {
         if (!displayColors) {
           return "white";

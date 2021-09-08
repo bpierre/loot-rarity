@@ -1,11 +1,19 @@
 import type { ColorFn } from "./types";
 
-import { rarityColor, rarityDescription } from "./main";
-import { dataUri, fetchOrDecodeDataUri, isUri } from "./utils";
+import { lootRarity, itemRarity, rarityColor, rarityDescription } from "./main";
+import {
+  dataUri,
+  fetchOrDecodeDataUri,
+  isUri,
+  warnDeprecatedName,
+} from "./utils";
+import { rarityBadge } from "./rarity-badge";
 
 type Options = {
   colorFn?: ColorFn;
   displayLevels?: boolean;
+  displayItemLevels?: boolean;
+  displayLootLevel?: boolean;
   imageFormat?: "data-uri" | "svg";
 };
 
@@ -47,24 +55,39 @@ export function itemsFromSvg(svg: string) {
 
 export function rarityImageFromItems(
   items: string[],
-  { colorFn, imageFormat = "data-uri", displayLevels = false }: Options = {}
+  {
+    colorFn,
+    displayLevels,
+    displayItemLevels,
+    displayLootLevel = false,
+    imageFormat = "data-uri",
+  }: Options = {}
 ) {
   if (items.length < 1) {
-    throw new Error("A bag should contain at least one item");
+    throw new Error("A Loot bag should contain at least one item");
+  }
+
+  if (displayLevels !== undefined) {
+    warnDeprecatedName("displayLevels", "displayItemLevels");
+  }
+  if (displayItemLevels === undefined) {
+    displayItemLevels = displayLevels ?? false;
   }
 
   const svg = [
     SVG_START,
     ...items.map((item, index) => {
       const y = 20 * (index + 1);
-      const level = displayLevels
-        ? ` (${rarityDescription(item).slice(0, 1)})`
+      const level = itemRarity(item);
+      const label = displayItemLevels
+        ? ` (${rarityDescription(level).slice(0, 1)})`
         : "";
       const color = rarityColor(item, { colorFn });
       return (
-        `<text x="10" y="${y}" fill="${color}">` + item + level + `</text>`
+        `<text x="10" y="${y}" fill="${color}">` + item + label + `</text>`
       );
     }),
+    displayLootLevel ? rarityBadge(lootRarity(items)) : "",
     SVG_END,
   ].join("");
 

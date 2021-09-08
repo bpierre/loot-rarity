@@ -22,11 +22,11 @@ export default [
     special: "divine robes",
     match: (name) => lc(name).includes("divine robe"),
   },
-  {
-    emoji: "✨",
-    special: "divine items",
-    match: (name) => lc(name).includes("divine"),
-  },
+  // {
+  //   emoji: "✨",
+  //   special: "divine items",
+  //   match: (name) => lc(name).includes("divine"),
+  // },
   {
     emoji: "🪖",
     special: "ancient helms",
