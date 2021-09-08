@@ -192,6 +192,14 @@ let rarified = await rarityImage(image, {
 
 <img width="1000" alt="Illustration of how rarityImage() transforms Loot images with custom colors." src="https://user-images.githubusercontent.com/36158/132146190-9ce0f17a-364e-4ca0-b1a9-9326eb5f2cca.png">
 
+#### With the Loot level
+
+```js
+let rarified = await rarityImage(image, { displayLootLevel: true });
+```
+
+<img width="1000" alt="Illustration of how rarityImage() transforms Loot images with the Loot level badge." src="https://user-images.githubusercontent.com/36158/132579918-9005d51a-d702-4e08-9c66-01db5e2004d6.png">
+
 ### rarityImageFromItems()
 
 ```ts
