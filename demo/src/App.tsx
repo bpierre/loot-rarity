@@ -133,7 +133,9 @@ function App() {
         }
         lootImage={bag?.image && <img src={bag?.image} alt="" />}
         lootImageBorderColor={
-          bag && displayLootLevel ? rarityColor(bag.lootRarity) : undefined
+          bag && displayLootLevel && displayColors
+            ? rarityColor(bag.lootRarity)
+            : undefined
         }
         options={
           <Fragment>
