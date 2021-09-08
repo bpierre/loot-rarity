@@ -1,7 +1,7 @@
 import occurences from "../data/occurences.json";
 import loot from "../data/loot.json";
 import { itemLevelFromOccurences } from "./utils";
-import { rarityDescription, bagRarity, RarityLevel } from "../src";
+import { rarityDescription, lootRarity, RarityLevel } from "../src";
 import rarityLevels from "../src/rarity-levels";
 
 type Occurences = Record<string, number>;
@@ -17,23 +17,32 @@ const bags = loot.map((loot, index) => {
 async function main() {
   const bagLevels = bags.reduce(
     (levelCounts, bag) => {
-      const level = bagRarity(bag.items);
+      const level = lootRarity(bag.items);
       levelCounts[level - 1]++;
       return levelCounts;
     },
     [0, 0, 0, 0, 0, 0]
   );
 
+  console.log(" Bag levels distribution:");
+  console.log("");
   console.log(
     bagLevels
       .map((value, index) => {
         const percentage = Math.round((value / 8000) * 10000) / 100;
-        return `Level ${index + 1} bags: ${percentage}%`;
+        const description = rarityDescription((index + 1) as RarityLevel);
+        const itemsScoreThreshold = rarityLevels[index][1];
+
+        const levelLabel = `${description}:`.padEnd(12);
+        const percentageLabel = `${percentage}%`.padStart(8);
+        const thresholdLabel = `score above ${String(itemsScoreThreshold).padStart(2)}`.padStart(9);
+        const groupTotalLabel = `(${bagLevels[index]} bags)`.padStart(13)
+
+        return ` ${levelLabel}${thresholdLabel}${percentageLabel}${groupTotalLabel}`;
       })
       .join("\n")
   );
-
-  return;
+  console.log("");
 
   const itemsLevels = Object.values(occurences as Occurences).reduce(
     (levels, occurences) => {
@@ -57,21 +66,24 @@ async function main() {
     const percentage = Math.round((items / total) * 10000) / 100;
     const threshold = rarityLevels[index][0];
 
-    let thresholdLabel = `${threshold} or less`;
-    if (threshold === -1) thresholdLabel = `above ${rarityLevels[1][0]}`;
-    if (threshold === 1) thresholdLabel = "exactly 1";
+    let thresholdLabel = `below ${String(threshold + 1).padStart(3)} occurences`;
+    if (threshold === -1)
+      thresholdLabel = `above ${rarityLevels[1][0]} occurences`;
+    if (threshold === 1) thresholdLabel = "unique";
 
     console.log(
       " " +
         `${description}:`.padEnd(11) +
-        `${thresholdLabel}`.padStart(12) +
-        `${percentage}%`.padStart(10) +
-        ` (${items} items)`.padStart(14)
+        `${thresholdLabel}`.padStart(21) +
+        `${percentage}%`.padStart(8) +
+        ` (${items} items)`.padStart(15)
     );
   });
 
   console.log("");
-  console.log(" Update src/rarity-levels.ts to tweak the distribution.");
+  console.log(
+    " Update src/rarity-levels.ts to tweak the distribution thresholds."
+  );
   console.log("");
 }
 
