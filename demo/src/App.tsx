@@ -24,7 +24,7 @@ function App() {
 
   const [displayColors, setDisplayColors] = useState(true);
   const [displayItemLevels, setDisplayItemLevels] = useState(false);
-  const [displayLootLevel, setDisplayLootLevel] = useState(false);
+  const [displayLootLevel, setDisplayLootLevel] = useState(true);
 
   const guildOptions = useMemo<Option[]>(
     () =>
