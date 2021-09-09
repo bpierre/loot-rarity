@@ -1,5 +1,7 @@
 <img width="1280" alt="Loot Rarity" src="https://user-images.githubusercontent.com/36158/131556816-cf5861c7-8619-4b56-9d90-f538ebb86f74.png">
 
+[![npm version](https://badgen.net/npm/v/loot-rarity)](https://www.npmjs.com/package/loot-rarity) [![bundle size](https://badgen.net/bundlephobia/minzip/loot-rarity)](https://bundlephobia.com/result?p=loot-rarity) [![License](https://badgen.net/github/license/bpierre/loot-rarity)](https://github.com/bpierre/loot-rarity/blob/main/LICENSE)
+
 Rarity levels for [Loot](https://lootproject.com).
 
 ## How are the rarity levels determined?
@@ -271,4 +273,4 @@ pnpm dev
 
 ## License
 
-MIT
+[MIT](./LICENSE)
